@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.BusanOn.mappers.memberMapper">
+	
+<!-- 	회원가입 -->
+	<insert id="InsertMember">
+		INSERT INTO MEMBER
+			 ( USER_ID
+			 , USER_TYPE
+			 , PASSWORD
+			 , USER_NAME
+		     , JUMIN
+		     , USER_PHONENUMBER
+		     , USER_ADDRESS
+			 , USER_ZIPCODE) 
+		VALUES
+			 ( #{user_id} 
+			 , #{user_type}
+			 , #{password}
+			 , #{user_name}
+		     , HEX(AES_ENCRYPT(#{jumin},'itwill'))
+		     , #{user_phonenumber}
+		     , #{user_address}
+		     , #{user_zipcode})
+	</insert>
+
+	
+	<select id="userlogin" resultType="map">
+		SELECT USER_ID
+			 , USER_TYPE
+		     , PASSWORD
+		     , USER_NAME
+		  FROM MEMBER
+		 WHERE USER_ID = #{user_id}
+		   AND USER_TYPE = #{user_type}
+	</select>
+	
+	<select id="iddup" resultType="map">
+		SELECT USER_ID
+		     , USER_TYPE
+		     , USER_NAME
+		  FROM MEMBER
+		 WHERE USER_ID = #{user_id}
+		   AND USER_TYPE = #{user_type}
+	</select>
+	
+	<update id="updatePass">
+		UPDATE MEMBER 
+		   SET PASSWORD = #{password}
+		 WHERE USER_ID = #{user_id}
+		   AND USER_TYPE = #{user_type}
+	</update>
+	
+	<update id="updateUser">
+		UPDATE MEMBER 
+		   SET USER_NAME = #{user_name}
+		     , PASSWORD = #{password}
+		     , USER_PHONENUMBER = #{user_phonenumber}
+		     , USER_ADDRESS = #{user_address}
+		 WHERE USER_ID = #{user_id}
+		   AND USER_TYPE = #{user_type}
+	</update>
+	
+	<select id="selectUser" resultType="map">
+		SELECT USER_NAME
+		     , PASSWORD
+		     , USER_PHONENUMBER
+		     , USER_ADDRESS
+		  FROM MEMBER
+		 WHERE USER_ID = #{user_id}
+		   AND USER_TYPE = #{user_type}
+	</select>
+	
+	<delete id="deleteUser">
+		DELETE
+		  FROM MEMBER
+		 WHERE USER_ID = #{user_id}
+		   AND USER_TYPE = #{user_type}
+	</delete>
+	
+	<select id="selectQnaMaxCount" resultType="int">
+		SELECT IFNULL(MAX(COUNT + 1), 1) AS COUNT
+	 	  FROM QNA_INQUIRE
+	</select>
+	
+	<insert id="insertQna">
+		INSERT INTO QNA_INQUIRE
+			 ( COUNT
+			 , USER_ID
+			 , USER_TYPE
+			 , TITLE
+			 , CONTENT
+		     , REPLY
+		     , TIME) 
+		VALUES
+			 ( (SELECT IFNULL(MAX(COUNT + 1), 1) AS COUNT
+	 	  		  FROM QNA_INQUIRE COUNT)
+			 , #{user_id} 
+			 , #{user_type}
+			 , #{title}
+			 , #{content}
+		     , #{reply}
+		     , #{time})
+	</insert>
+	
+	<select id="selectQnaList" resultType="com.BusanOn.domain.QnaDTO">
+		SELECT COUNT
+			 , TITLE
+			 , CONTENT
+		     , REPLY
+		     , TIME
+		     , WRITER
+			 , ANSWER
+			 , ANSWER_TIME
+		  FROM QNA_INQUIRE
+		 WHERE USER_ID = #{user_id}
+		   AND USER_TYPE = #{user_type}
+		 ORDER BY COUNT DESC;
+	</select>
+	
+		
+	<select id="memberReview" resultType="com.BusanOn.domain.ReviewDTO">
+		SELECT A.REV_NUM
+		     , A.PEN_ID
+		     , B.PEN_NAME
+		     , A.USER_ID
+		     , A.USER_TYPE
+		     , A.REV_TITLE
+		     , A.REV_CONTENT
+		     , A.REV_STAR
+		     , A.REV_DATE
+		     , A.REPLY
+		     , A.ANS_CONTENT
+		     , A.ANS_DATE
+		  FROM REVIEW A JOIN PENSION B
+		    ON A.PEN_ID = B.PEN_ID
+		 WHERE A.USER_ID = #{user_id}
+		   AND A.USER_TYPE = #{user_type}
+		 ORDER BY REV_DATE DESC
+	</select>
+	<select id="reservationlist" resultType="com.BusanOn.domain.ReservationDTO">
+		 SELECT A.RES_NUMBER
+		 	  , A.PEN_ID
+		 	  , B.PEN_NAME
+		 	  , A.RM_NAME
+		 	  , CONCAT(A.CHECK_IN_D,' ', A.CHECK_IN_T) AS 'CHECK_IN_D'
+		 	  , CONCAT(A.CHECK_OUT_D, ' ', A.CHECK_OUT_T) AS 'CHECK_OUT_D'
+		 	  , A.RES_STATUS
+		   FROM RESERVATION A JOIN PENSION B
+             ON A.PEN_ID = B.PEN_ID
+          WHERE A.USER_ID = #{user_id}
+		    AND A.USER_TYPE = #{user_type}
+	</select>
+</mapper>

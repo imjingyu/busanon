@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.BusanOn.mappers.ReviewMapper">
+	<select id="selectReview" resultType="com.BusanOn.domain.ReviewDTO">
+		SELECT A.REV_NUM
+		     , A.PEN_ID
+		     , A.USER_ID
+		     , C.USER_NAME
+		     , A.USER_TYPE
+		     , A.REV_TITLE
+		     , A.REV_CONTENT
+		     , A.REV_STAR
+		     , A.REV_DATE
+		     , A.REPLY
+		     , A.ANS_CONTENT
+		     , A.ANS_DATE
+		     , B.IMAGE
+		     , P.PEN_NAME
+		  FROM REVIEW A LEFT OUTER JOIN ( SELECT REV_NUM, group_concat(REV_IMAGE SEPARATOR ',') IMAGE
+											FROM REVIEW_ATTACH
+										   GROUP BY REV_NUM) B
+		    ON A.REV_NUM = B.REV_NUM JOIN MEMBER C
+		    ON A.USER_ID = C.USER_ID
+		   AND A.USER_TYPE = C.USER_TYPE JOIN PENSION P
+		    ON A.PEN_ID = P.PEN_ID
+		 WHERE 1=1
+	   <if test="pen_id != null and !pen_id.equals('')">
+		   AND A.PEN_ID = #{pen_id}
+	   </if>
+		 ORDER BY A.REV_NUM DESC
+	   <if test="index != null and !index.equals('')">
+		 LIMIT ${index}, ${amount};
+	   </if>
+	</select>
+	
+	<select id="avgStar" resultType="java.util.Map">
+		SELECT ROUND(AVG(REV_STAR), 1) 'AVG'
+		     , COUNT(REV_NUM) 'R_COUNT'
+		     , SUM(IF(REPLY = 'Y', 1, 0)) 'A_COUNT'
+		  FROM REVIEW
+		 WHERE PEN_ID = #{pen_id};
+	</select>
+	
+	<select id="reviewCount" resultType="int">
+		SELECT IFNULL(MAX(REV_NUM), 0) + 1
+		  FROM REVIEW
+	</select>
+	
+	<insert id="reviewInput">
+		INSERT INTO REVIEW
+		     ( REV_NUM
+		     , PEN_ID
+		     , USER_ID
+		     , USER_TYPE
+		     , REV_TITLE
+		     , REV_CONTENT
+		     , REV_STAR
+		     , REV_DATE
+		     , REPLY
+		     , ANS_CONTENT
+		     , ANS_DATE)
+	  VALUES ( #{rev_num}
+	         , #{pen_id}
+	         , #{user_id}
+	         , #{user_type}
+	         , #{rev_title}
+	         , #{rev_content}
+	         , #{rev_star}
+	         , #{rev_date}
+	         , #{reply}
+	         , #{ans_content}
+	         , #{ans_date})
+	</insert>
+	
+	<insert id="reviewimage">
+		INSERT INTO REVIEW_ATTACH
+		VALUES ( (SELECT MAX(REV_NUM) + 1 AS REV_NUM
+				   FROM REVIEW)
+		      , #{filename})
+	</insert>
+	
+	<select id="reviewcount2" resultType="int">
+		SELECT COUNT(REV_NUM)
+		  FROM REVIEW
+	</select>
+</mapper>
+

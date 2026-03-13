@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.BusanOn.mappers.paymentMapper">
+
+	<!-- 결제 확정 -->
+	<insert id="rsp">
+		INSERT INTO RESERVATION
+			 ( RES_NUMBER
+			 , USER_ID
+			 , USER_TYPE
+			 , PEN_ID
+			 , ROOM_ID
+			 , RM_NAME
+			 , CHECK_IN_D
+			 , CHECK_OUT_D
+			 , CHECK_IN_T
+			 , CHECK_OUT_T
+			 , RES_TIME
+			 , RM_PRICE
+			 , RES_STATUS )
+		VALUES
+			 ( #{res_number}
+			 , #{user_id}
+			 , #{user_type}
+			 , #{pen_id}
+			 , #{room_id}
+			 , #{rm_name}
+			 , #{check_in_d}
+			 , #{check_out_d}
+			 , #{check_in_t}
+			 , #{check_out_t}
+			 , #{res_time}
+			 , #{rm_price}
+			 , #{res_status} )
+	</insert>
+	
+	<!-- 결제 취소 -->
+	<update id="cancelreservation">
+		UPDATE RESERVATION 
+		   SET RES_STATUS = '0'
+		 WHERE RES_NUMBER = #{res_number}
+	</update>
+
+</mapper>

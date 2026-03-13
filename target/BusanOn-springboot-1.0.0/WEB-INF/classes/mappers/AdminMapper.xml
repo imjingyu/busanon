@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.BusanOn.mappers.adminMapper">
+
+	<select id="selectQna" resultType="com.BusanOn.domain.QnaDTO">
+		SELECT COUNT
+			 , A.USER_ID
+			 , A.USER_TYPE
+			 , B.USER_NAME
+			 , A.TITLE
+			 , A.CONTENT
+		     , A.REPLY
+		     , A.TIME
+		     , A.WRITER
+			 , A.ANSWER
+			 , A.ANSWER_TIME
+		  FROM QNA_INQUIRE A JOIN MEMBER B
+		    ON A.USER_ID = B.USER_ID
+		   AND A.USER_TYPE = B.USER_TYPE
+		 ORDER BY REPLY, COUNT DESC
+		 LIMIT ${index}
+		     , ${amount}
+	</select>
+	
+	<update id="updateAnwser">
+		UPDATE QNA_INQUIRE
+		   SET WRITER = #{writer}
+		     , ANSWER = #{answer}
+		     , ANSWER_TIME = #{answer_time}
+		     , REPLY = #{reply}
+		 WHERE COUNT =  #{count}
+	</update>
+	
+	<select id="qnaCount" resultType="int">
+		SELECT COUNT(COUNT)
+		  FROM QNA_INQUIRE
+		  WHERE 1=1
+		  <if test = "!''.equals(reply) and reply != null">
+		  AND REPLY = #{reply}
+		  </if>
+	</select>
+	
+	<select id="customCount" resultType="map">
+	  	SELECT SUM(IF(USER_TYPE = '0', 1, 0)) 'ADMIN'
+	 		 , SUM(IF(USER_TYPE = '1', 1, 0)) 'USER'
+     		 , SUM(IF(USER_TYPE = '2', 1, 0)) 'BUSINESS'
+     		 , (SELECT COUNT(PEN_ID)
+     		 	  FROM PENSION) AS 'PCOUNT'
+     		 , (SELECT SUM(CAST(RM_PRICE AS UNSIGNED))
+		 		  FROM RESERVATION) AS 'PAYMENT'
+		 	 , (SELECT COUNT(COUNT)
+				  FROM QNA_INQUIRE
+				 WHERE REPLY = 'N') AS 'NQNA'
+		  FROM MEMBER;
+	</select>
+	
+	<!-- 전체 예약 내역 조회 -->
+	<select id="listReservationAll" resultType="com.BusanOn.domain.ReservationDTO">
+	SELECT R.RES_NUMBER
+		 , P.PEN_NAME, R.RM_NAME
+	 	 , M.USER_NAME, R.USER_ID
+	  	 , R.CHECK_IN_D, R.CHECK_IN_T
+	 	 , R.CHECK_OUT_D, R.CHECK_OUT_T
+		 , R.RES_TIME
+  	 FROM RESERVATION R LEFT JOIN PENSION P
+						ON (P.PEN_ID = R.PEN_ID)
+						LEFT JOIN MEMBER M
+						ON (M.USER_ID = R.USER_ID)
+					   AND M.USER_TYPE = R.USER_TYPE;
+					   
+	</select>
+	
+	
+	<select id="selectPay" resultType="map">
+		SELECT P.PEN_ID
+		 	 , P.PEN_NAME
+		 	 , P.PEN_ADDRESS
+		 	 , COUNT(R.RES_NUMBER) AS 'RES_COUNT'
+		 	 , IFNULL(SUM(CAST(R.RM_PRICE AS UNSIGNED)), 0) AS 'PAYMENT'
+		 	 , SUM(CASE WHEN MONTH(STR_TO_DATE(R.RES_TIME, '%Y-%m-%d')) = MONTH(CURRENT_DATE()) 
+						 AND YEAR(STR_TO_DATE(R.RES_TIME, '%Y-%m-%d')) = YEAR(CURRENT_DATE())
+						THEN CAST(R.RM_PRICE AS UNSIGNED)
+				        ELSE 0 END) AS 'M_PAYMENT'
+		 	 , SUM(CASE WHEN MONTH(STR_TO_DATE(R.RES_TIME, '%Y-%m-%d')) = MONTH(CURRENT_DATE()) 
+						 AND YEAR(STR_TO_DATE(R.RES_TIME, '%Y-%m-%d')) = YEAR(CURRENT_DATE())
+						THEN 1
+				        ELSE 0 END) AS 'M_RES_COUNT'
+		  FROM RESERVATION R RIGHT OUTER JOIN PENSION P
+		    ON R.PEN_ID = P.PEN_ID
+		 GROUP BY P.PEN_ID, P.PEN_NAME
+		 ORDER BY PAYMENT DESC
+	</select>
+	
+	<select id="pensionlist" resultType="com.BusanOn.domain.PensionDTO">
+		SELECT P.PEN_ID
+			 , P.PEN_NAME
+			 , P.PEN_ADDRESS
+			 , CAST(IFNULL(ROUND(AVG(R.REV_STAR), 0), 0) AS UNSIGNED) AS 'STAR'
+			 , COUNT(R.REV_NUM) AS 'RV'
+		  FROM PENSION P LEFT OUTER JOIN REVIEW R
+		    ON P.PEN_ID = R.PEN_ID
+		 GROUP BY P.PEN_ID
+		 ORDER BY RV DESC;
+	</select>
+	
+	<select id="rescheck" resultType="com.BusanOn.domain.MemberDTO">
+		SELECT USER_ID, USER_TYPE 
+		  FROM RESERVATION 
+		 WHERE USER_ID = #{user_id}
+		   AND USER_TYPE = #{user_type}
+		   AND PEN_ID = #{pen_id}
+		 GROUP BY USER_ID;
+	</select>
+	
+	<!-- 결제 취소 -->
+	<update id="cancelReservation">
+		UPDATE RESERVATION 
+		   SET RES_STATUS = '0'
+		 WHERE RES_NUMBER = #{res_number}
+	</update>
+</mapper>
