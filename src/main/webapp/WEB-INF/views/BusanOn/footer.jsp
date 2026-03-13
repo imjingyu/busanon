@@ -33,13 +33,13 @@
                 </div>
             </div>
         </div>
-        
+
 
     </footer>
     <div class="copy">
             <div class="container">
                 <a href="https://www.smarteyeapps.com/">2022 &copy; 부산온나 | come to Busan</a>
-                
+
                 <span>
                 <a><i class="fab fa-github"></i></a>
                 <!-- <a><i class="fab fa-google-plus-g"></i></a> -->
@@ -49,7 +49,7 @@
         </span>
             </div>
 
-        </div> 
+        </div>
 
     </body>
 

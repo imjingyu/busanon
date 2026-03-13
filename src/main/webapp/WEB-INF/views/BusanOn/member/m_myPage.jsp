@@ -21,7 +21,7 @@
 <body>
 <!--헤더 -->
 <%@ include file="../header.jsp" %>
- 
+
 <!--  ************************* Page Title Starts Here ************************** -->
 <div class="page-nav no-margin row">
     <div class="container">
@@ -33,6 +33,7 @@
 
 <!-- 마이페이지 폼 시작-->
 
+<main class="main-content">
  <div class="section bg-light" style="margin-top: 25px;">
 		<div class="container">
 			<div class="row">
@@ -67,7 +68,7 @@
 						<p class="text-black-50">1:1 문의내역을 조회합니다.</p>
 <!-- 						<p><a href="/member/mypage/listInquiry" class="learn-more">페이지 이동</a></p> -->
 					</div>
-				</div>	
+				</div>
 
 				<div class="col-6 col-lg-4">
 					<div class="box-feature mb-4">
@@ -77,7 +78,7 @@
 <!-- 						<p><a href="/member/modify" class="learn-more">페이지 이동</a></p> -->
 					</div>
 				</div>
-				
+
 				<div class="col-6 col-lg-4">
 					<div class="box-feature mb-4">
 						<c:choose>
@@ -89,14 +90,14 @@
 							<c:otherwise>
 							    <i class="bi bi-building d-block-3 mb-4" style="font-size:50px;"></i>
 								<h3 class="text-black mb-3 font-weight-bold"><a href="${pageContext.request.contextPath }/business/b_index">업체 관리</a></h3>
-								<p class="text-black-50">관리페이지로 이동합니다.</p>	
+								<p class="text-black-50">관리페이지로 이동합니다.</p>
 							</c:otherwise>
 						</c:choose>
-						
+
 <!-- 						<p><a href="/member/modify" class="learn-more">페이지 이동</a></p> -->
 					</div>
 				</div>
-				
+
 <!-- 				<div class="col-6 col-lg-4"> -->
 <!-- 					<div class="box-feature mb-4"> -->
 <!-- 						<img class="d-block-3 mb-4" src="http://project.yermi.works/resources/assets/images/settings.png" style="width:50px"> -->
@@ -105,16 +106,15 @@
 <!-- 						<p><a href="/admin/index" class="learn-more">페이지 이동</a></p> -->
 <!-- 					</div> -->
 <!-- 				</div> -->
-				
+
 			</div>
 		</div>
 	</div>
-
+</main>
 <!-- 마이페이지 폼 끝-->
 
-<!--  ************************* Footer Start Here ************************** --> 
-     <%@ include file="../footer.jsp" %>
-    
+<!--  ************************* Footer Start Here ************************** -->
+
 
     </body>
 

@@ -132,8 +132,7 @@
 
 	<div style="padding-bottom: 20px;"></div>
 <!--footer -->
-<%@ include file="../footer.jsp" %>
-	
+
 	<script>
 		var res_num = '${businessDTO.PEN_ID }' + '${param.room_id}' + '${uidRandom }';
 // 		alert(res_num);

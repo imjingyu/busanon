@@ -126,8 +126,7 @@ color:blue;
 <!-- 마이페이지 폼 끝-->
 
 <!--  ************************* Footer Start Here ************************** --> 
-     
-    <%@ include file="../../footer.jsp" %>
+
     <script type="text/javascript">
     function cancelreservation(res_number){
     	if(confirm('취소하시겠습니까?')){
