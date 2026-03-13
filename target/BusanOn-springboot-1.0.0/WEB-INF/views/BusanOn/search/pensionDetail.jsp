@@ -227,7 +227,6 @@
 	<div style="padding-top: 100px;"></div>
 	</div>
 <%@ include file="review.jsp" %>
-<%@ include file="../footer.jsp" %>
 	</div>
 
 <script type="text/javascript">

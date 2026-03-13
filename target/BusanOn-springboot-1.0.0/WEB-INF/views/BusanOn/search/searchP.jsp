@@ -127,7 +127,6 @@ margin: 0 auto 0 auto !important;  /* 이미지 사이 공백 삭제 */
 				</div>  
 				
 				<div style="padding-bottom: 10px;"></div>
-				<%@ include file="../footer.jsp" %>
 </body>
 <script type="text/javascript">
 var index = 2;
