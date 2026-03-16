@@ -103,11 +103,14 @@
      
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     
 <%@ include file="../footer.jsp" %>
 
 </body>
 =======
+=======
+>>>>>>> parent of fee9d09 (1234)
 =======
 >>>>>>> parent of fee9d09 (1234)
     <footer class="footer">
