@@ -33,12 +33,18 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     </div>
 </footer>
 <c:if test="${not fn:contains(uri, '/search/main') and not fn:contains(uri, '/admin/') and not fn:contains(uri, '/business/')}">
     <button type="button" class="floating-back-btn" onclick="history.back()">뒤로가기</button>
 </c:if>
 =======
+=======
+>>>>>>> parent of fee9d09 (1234)
+=======
+>>>>>>> parent of fee9d09 (1234)
 =======
 >>>>>>> parent of fee9d09 (1234)
 =======

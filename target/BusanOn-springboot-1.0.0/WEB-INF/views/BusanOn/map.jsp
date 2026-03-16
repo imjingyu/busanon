@@ -362,8 +362,56 @@ function removeAllChildNods(el) {
                     </address>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
+=======
+=======
+
+                </div>
+            </div>
+        </div>
+        
+
+    </footer>
+    <div class="copy">
+            <div class="container">
+                <a href="https://www.smarteyeapps.com/">2019 &copy; All Rights Reserved | Designed and Developed by Smarteyeapps</a>
+                
+                <span>
+                <a><i class="fab fa-github"></i></a>
+                <a><i class="fab fa-google-plus-g"></i></a>
+                <a><i class="fab fa-pinterest-p"></i></a>
+                <a><i class="fab fa-twitter"></i></a>
+                <a><i class="fab fa-facebook-f"></i></a>
+        </span>
+            </div>
+
+        </div> 
+>>>>>>> parent of fee9d09 (1234)
+
+                </div>
+            </div>
+        </div>
+        
+
+    </footer>
+    <div class="copy">
+            <div class="container">
+                <a href="https://www.smarteyeapps.com/">2019 &copy; All Rights Reserved | Designed and Developed by Smarteyeapps</a>
+                
+                <span>
+                <a><i class="fab fa-github"></i></a>
+                <a><i class="fab fa-google-plus-g"></i></a>
+                <a><i class="fab fa-pinterest-p"></i></a>
+                <a><i class="fab fa-twitter"></i></a>
+                <a><i class="fab fa-facebook-f"></i></a>
+        </span>
+            </div>
+
+        </div> 
+>>>>>>> parent of fee9d09 (1234)
 
                 </div>
             </div>
