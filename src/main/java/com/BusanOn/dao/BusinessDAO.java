@@ -65,6 +65,11 @@ public class BusinessDAO {
 		
 	}
 
+	public void deleteRoom(BusinessDTO businessDTO) {
+		sqlSession.delete(namespace+".deleteRoom", businessDTO);
+
+	}
+
 
 	public int reservationCount(String user_id) {
 		return sqlSession.selectOne(namespace+".reservationCount", user_id);
@@ -99,6 +104,22 @@ public class BusinessDAO {
 
 	public  Map<String, Object> reservationAtMonth(Map<String, Object> sMap) {
 		return sqlSession.selectOne(namespace + ".reservationAtMonth", sMap);
+	}
+
+	public List<ReservationDTO> getRecentReservationsForBusiness(String user_id) {
+		return sqlSession.selectList(namespace + ".getRecentReservationsForBusiness", user_id);
+	}
+
+	public List<ReviewDTO> getUnansweredReviewsForBusiness(String user_id) {
+		return sqlSession.selectList(namespace + ".getUnansweredReviewsForBusiness", user_id);
+	}
+
+	public List<Map<String, Object>> getMonthlyRevenueForBusiness(String user_id) {
+		return sqlSession.selectList(namespace + ".getMonthlyRevenueForBusiness", user_id);
+	}
+
+	public List<Map<String, Object>> getRoomRevenueForBusiness(String user_id) {
+		return sqlSession.selectList(namespace + ".getRoomRevenueForBusiness", user_id);
 	}
 
 

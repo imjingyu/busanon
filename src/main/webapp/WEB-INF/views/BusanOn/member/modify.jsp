@@ -26,74 +26,87 @@
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> 
 </head>
 
+<style>
+.member-edit-section { padding: 50px 0 60px; background: #f7f9fc; min-height: calc(100vh - 200px); }
+.member-edit-card { background: #fff; border-radius: 16px; box-shadow: 0 4px 30px rgba(0,0,0,0.09); overflow: hidden; max-width: 620px; margin: 0 auto; }
+.member-edit-head { background: linear-gradient(135deg, #1a2332 0%, #2d4a6e 100%); padding: 28px 36px; }
+.member-edit-head h3 { color: #fff; font-size: 20px; font-weight: 700; margin: 0; }
+.member-edit-head h3 i { color: #38b2d8; margin-right: 8px; }
+.member-edit-grid { padding: 28px 36px 8px; display: grid; grid-template-columns: 120px 1fr; gap: 0; }
+.field-label { display: flex; align-items: center; font-size: 13px; font-weight: 700; color: #4a5568; padding: 10px 0; border-bottom: 1px solid #f0f4f8; }
+.field-control { padding: 6px 0; border-bottom: 1px solid #f0f4f8; display: flex; align-items: center; }
+.field-control .form-control { border: 1.5px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; font-size: 14px; }
+.field-control .form-control:focus { border-color: #38b2d8; box-shadow: 0 0 0 3px rgba(56,178,216,0.12); }
+.inline-row { display: flex; gap: 8px; width: 100%; }
+.member-edit-actions { padding: 24px 36px; display: flex; justify-content: flex-end; }
+.member-edit-actions .btn { font-size: 18px; font-family: 'Do Hyeon', sans-serif; padding: 10px 36px; border-radius: 9px; background: #38b2d8; border-color: #38b2d8; }
+.member-edit-actions .btn:hover { background: #2c9fc4; border-color: #2c9fc4; }
+</style>
 <body>
-<!--헤더 -->
 <%@ include file="../header.jsp" %>
- 
-<!--  ************************* Page Title Starts Here ************************** -->
-<div class="page-nav no-margin row">
-    <div class="container">
-        <div class="row">
-            <h2>마이페이지</h2>
-        </div>
-    </div>
-</div>
-<script>
-AOS.init({duration: 1000});
-</script>
+
 <!-- 마이페이지 폼 시작-->
 <form action="updateuser" method="post">
+    <section class="member-edit-section">
+        <div class="container">
+            <div class="member-edit-card">
+                <div class="member-edit-head">
+                    <h3><i class="bi bi-person-gear"></i> 회원정보 수정</h3>
+                </div>
 
- <div class="section bg-light" style="margin-top: 25px;">
-		<div class="container">
-			<div class="row">
-			<div class="col-6 col-lg-4">
-				<div class="box-feature mb-4" style="pointer-events: none; margin-top: 50px;">
-					<h3 class="text-black mb-3 font-weight-bold" style="visibility: hidden;">회원정보 수정</h3>
-					<div class="form-group">
-					 <input class="form-control" type="text" value="이름" style="text-align: right; color: black; border:none; font-size: 17px; font-weight: bold; text-shadow: -1px 0 aqua, 0 1px aqua, 1px 0 aqua, 0 -1px aqua;"data-aos="fade-right" data-aos-delay="100">
-					 <c:if test="${not fn:contains(sessionScope.user_id,'APIlogin')}">
-						<input class="form-control" type="text" value="패스워드" style="text-align: right; color: black; border:none; font-size: 17px; font-weight: bold; text-shadow: -1px 0 aqua, 0 1px aqua, 1px 0 aqua, 0 -1px aqua;"data-aos="fade-right" data-aos-delay="200">
-					 </c:if>
-					 <input class="form-control" type="text" value="휴대폰 번호" style="text-align: right; color: black; border:none; font-size: 17px; font-weight: bold; text-shadow: -1px 0 aqua, 0 1px aqua, 1px 0 aqua, 0 -1px aqua;"data-aos="fade-right" data-aos-delay="300">
-					 <input class="form-control" type="text" value="우편번호" style="text-align: right; color: black; border:none; font-size: 17px; font-weight: bold; text-shadow: -1px 0 aqua, 0 1px aqua, 1px 0 aqua, 0 -1px aqua;"data-aos="fade-right" data-aos-delay="400">
-					 <input class="form-control" type="text" value="주소" style="text-align: right; color: black; border:none; font-size: 17px; font-weight: bold; text-shadow: -1px 0 aqua, 0 1px aqua, 1px 0 aqua, 0 -1px aqua;"data-aos="fade-right" data-aos-delay="500">
-					 <input class="form-control" type="text" value="상세주소" style="text-align: right; color: black; border:none; font-size: 17px; font-weight: bold; text-shadow: -1px 0 aqua, 0 1px aqua, 1px 0 aqua, 0 -1px aqua;"data-aos="fade-right"data-aos-delay="600"> 
-				    </div>
-<!-- 						<p><a href="#" class="learn-more" id="mypagePoint">페이지 이동</a></p> -->
-				</div>
-			</div>
-			<div class="col-6 col-lg-4">
-				<div class="box-feature mb-4" style="margin-top: 50px;" data-aos="flip-left" data-aos-anchor-placement="top-bottom">
-					<i class="bi bi-person-gear d-block-3 mb-4" style="font-size:50px;"></i>
-					<h3 class="text-black mb-3 font-weight-bold">회원정보 수정</h3>
-					<div class="form-group">
-				     <input class="form-control" type="text" name="user_name" id="user_name" required placeholder="이름" value="${MemberDTO.USER_NAME}">
-				      <c:if test="${not fn:contains(sessionScope.user_id,'APIlogin')}">
-						<input class="form-control" type="password" name="password" id="password" required placeholder="패스워드">
-					 </c:if>
-				     <input class="form-control" type="text" name="user_phonenumber" id="user_phonenumber" required placeholder="휴대폰 번호 ex) 000-0000-0000" maxlength="13" value="${MemberDTO.USER_PHONENUMBER}">
-				     <input class="form-control" type="text" name="postNum" id="postNum" required placeholder="우편번호" style="width:30%; display:inline;">
-				     <input class="btn btn-danger" type="button" value="우편번호 검색" onclick="addressSearch()" style="width:50%; display:inline; font-size: 20px; font-family: 'Do Hyeon', sans-serif; padding: 0.75px 0.75px;">
-				     <input class="form-control" type="text" name="user_address" id="user_address" required placeholder="주소" value="${MemberDTO.USER_ADDRESS}">
-				     <input class="form-control" type="text" name="user_address1" id="user_address1" required placeholder="상세주소">
-				    </div>
-				</div>
-			</div>
-			<div class="col-6 col-lg-4"></div>
-			<div class="col-6 col-lg-4"></div>
-			<div class="col-6 col-lg-4" style="margin-bottom: 50px;">
-			<input class="btn btn-danger w-100" id="loginbtn" type="submit" value="입 력" style="font-size: 27px; font-family: 'Do Hyeon', sans-serif; padding: 0.75px 0.75px;">
-			</div>
-			</div>
-		</div>
-	</div>
+                <div class="member-edit-grid">
+                    <div class="field-label">이름</div>
+                    <div class="field-control">
+                        <input class="form-control" type="text" name="user_name" id="user_name" required placeholder="이름" value="${MemberDTO.USER_NAME}">
+                    </div>
+
+                    <c:if test="${not fn:contains(sessionScope.user_id,'APIlogin')}">
+                        <div class="field-label">패스워드</div>
+                        <div class="field-control">
+                            <input class="form-control" type="password" name="password" id="password" required placeholder="패스워드">
+                        </div>
+                    </c:if>
+
+                    <div class="field-label">휴대폰 번호</div>
+                    <div class="field-control">
+                        <input class="form-control" type="text" name="user_phonenumber" id="user_phonenumber" required placeholder="휴대폰 번호 ex) 000-0000-0000" maxlength="13" value="${MemberDTO.USER_PHONENUMBER}">
+                    </div>
+
+                    <div class="field-label">우편번호</div>
+                    <div class="field-control">
+                        <div class="inline-row">
+                            <input class="form-control" type="text" name="postNum" id="postNum" required placeholder="우편번호">
+                            <input class="btn btn-danger" type="button" value="우편번호 검색" onclick="addressSearch()" style="width: 220px; font-size: 20px; font-family: 'Do Hyeon', sans-serif;">
+                        </div>
+                    </div>
+
+                    <div class="field-label">주소</div>
+                    <div class="field-control">
+                        <input class="form-control" type="text" name="user_address" id="user_address" required placeholder="주소" value="${MemberDTO.USER_ADDRESS}">
+                    </div>
+
+                    <div class="field-label">상세주소</div>
+                    <div class="field-control">
+                        <input class="form-control" type="text" name="user_address1" id="user_address1" required placeholder="상세주소">
+                    </div>
+                </div>
+
+                <div class="member-edit-actions">
+                    <input class="btn btn-danger" id="loginbtn" type="submit" value="입 력" style="font-size: 27px; font-family: 'Do Hyeon', sans-serif;">
+                </div>
+            </div>
+        </div>
+    </section>
 </form>
 <!-- 마이페이지 폼 끝-->
 
+
 <!--  ************************* Footer Start Here ************************** --> 
      
-    </body>
+    
+<%@ include file="../footer.jsp" %>
+
+</body>
 
     <script src="assets/js/jquery-3.2.1.min.js"></script>
     <script src="assets/js/popper.min.js"></script>

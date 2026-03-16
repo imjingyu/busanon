@@ -105,6 +105,62 @@
 		 ORDER BY RV DESC;
 	</select>
 	
+	<!-- 관리자 알림: 미답변 1:1 문의 (최근 5건) -->
+	<select id="getUnansweredQna" resultType="com.BusanOn.domain.QnaDTO">
+		SELECT Q.COUNT
+		     , Q.USER_ID
+		     , Q.USER_TYPE
+		     , M.USER_NAME
+		     , Q.TITLE
+		     , Q.CONTENT
+		     , Q.TIME
+		  FROM QNA_INQUIRE Q JOIN MEMBER M
+		    ON Q.USER_ID = M.USER_ID
+		   AND Q.USER_TYPE = M.USER_TYPE
+		 WHERE Q.REPLY = 'N'
+		 ORDER BY Q.COUNT DESC
+		 LIMIT 5
+	</select>
+
+	<!-- 관리자 알림: 최근 7일 예약 (최근 5건) -->
+	<select id="getRecentReservations" resultType="com.BusanOn.domain.ReservationDTO">
+		SELECT R.RES_NUMBER
+		     , P.PEN_NAME
+		     , R.RM_NAME
+		     , M.USER_NAME
+		     , R.USER_ID
+		     , R.CHECK_IN_D
+		     , R.RES_TIME
+		  FROM RESERVATION R LEFT JOIN PENSION P ON P.PEN_ID = R.PEN_ID
+		                     LEFT JOIN MEMBER M ON M.USER_ID = R.USER_ID AND M.USER_TYPE = R.USER_TYPE
+		 WHERE STR_TO_DATE(R.RES_TIME, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+		 ORDER BY R.RES_NUMBER DESC
+		 LIMIT 5
+	</select>
+
+	<!-- 관리자 월별 전체 매출 (최근 6개월) -->
+	<select id="getAdminMonthlyRevenue" resultType="map">
+		SELECT DATE_FORMAT(STR_TO_DATE(RES_TIME, '%Y-%m-%d'), '%Y-%m') AS MON
+		     , IFNULL(SUM(CAST(RM_PRICE AS UNSIGNED)), 0) AS AMOUNT
+		     , COUNT(RES_NUMBER) AS CNT
+		  FROM RESERVATION
+		 WHERE RES_STATUS = '1'
+		   AND STR_TO_DATE(RES_TIME, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+		 GROUP BY MON
+		 ORDER BY MON ASC
+	</select>
+
+	<!-- 관리자 펜션별 매출 top5 (도넛 차트용) -->
+	<select id="getTopPensionRevenue" resultType="map">
+		SELECT P.PEN_NAME
+		     , IFNULL(SUM(CAST(R.RM_PRICE AS UNSIGNED)), 0) AS AMOUNT
+		  FROM RESERVATION R JOIN PENSION P ON P.PEN_ID = R.PEN_ID
+		 WHERE R.RES_STATUS = '1'
+		 GROUP BY P.PEN_ID, P.PEN_NAME
+		 ORDER BY AMOUNT DESC
+		 LIMIT 5
+	</select>
+
 	<select id="rescheck" resultType="com.BusanOn.domain.MemberDTO">
 		SELECT USER_ID, USER_TYPE 
 		  FROM RESERVATION 

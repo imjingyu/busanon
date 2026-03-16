@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.BusanOn.domain.MemberDTO;
 import com.BusanOn.domain.PensionDTO;
 import com.BusanOn.domain.QnaDTO;
+import com.BusanOn.domain.ReservationDTO;
 
 @Repository
 public class MemberListDAO {
@@ -57,6 +58,22 @@ public class MemberListDAO {
 	public List<PensionDTO> pensionlist(){
 		return sqlSession.selectList(NAMESPACE2 + ".pensionlist");
 	}
-	
+
+	public List<QnaDTO> getUnansweredQna(){
+		return sqlSession.selectList(NAMESPACE2 + ".getUnansweredQna");
+	}
+
+	public List<ReservationDTO> getRecentReservations(){
+		return sqlSession.selectList(NAMESPACE2 + ".getRecentReservations");
+	}
+
+	public List<Map<String, Object>> getAdminMonthlyRevenue(){
+		return sqlSession.selectList(NAMESPACE2 + ".getAdminMonthlyRevenue");
+	}
+
+	public List<Map<String, Object>> getTopPensionRevenue(){
+		return sqlSession.selectList(NAMESPACE2 + ".getTopPensionRevenue");
+	}
+
 }
 

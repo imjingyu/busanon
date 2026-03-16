@@ -1,208 +1,235 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"    pageEncoding="UTF-8"%>
-<!doctype html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html lang="en">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/all.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/animate.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/plugins/slider/css/owl.carousel.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/plugins/slider/css/owl.theme.default.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
+<script src="${pageContext.request.contextPath}/resources/script/jquery-3.6.0.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/logintimer.js"></script>
+<!-- 다크모드 깜빡임 방지: 렌더링 전 테마 적용 -->
+<script>
+    (function() {
+        var theme = localStorage.getItem('busanon-theme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+    })();
+</script>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Free Tour and Travel Website Tempalte | Smarteyeapps.com</title>
-    <link rel="shortcut icon" href="${pageContext.request.contextPath }/resources/images/fav.png" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="${pageContext.request.contextPath }/resources/images/fav.jpg">
-    <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/all.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/animate.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/plugins/slider/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/plugins/slider/css/owl.theme.default.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/style.css" />
-    <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/logintimer.js"></script>
-       <style>
-       
+<%@ include file="loading.jsp" %>
 
-/* #menu a { */
-/*   position: relative; */
-/*   display: inline-block; */
-/*   transition: .3s; */
-/* } */
-/* #menu a::after { */
-/*   position: absolute; */
-/*   bottom: 0; */
-/*   left: 50%; */
-/*   content: ''; */
-/*   width: 0; */
-/*   height: 1px; */
-/*   background-color: rgb(235,70,70); */
-/*   transition: .3s; */
-/*   -webkit-transform: translateX(-50%); */
-/*   transform: translateX(-50%); */
-/* } */
-/* #menu a:hover::after { */
-/*   width: 100%; */
-/* } */
+<!-- =================== HEADER =================== -->
+<header id="main-header">
+    <div class="header-inner">
+        <!-- 로고 -->
+        <a class="header-logo" href="${pageContext.request.contextPath}/search/main">
+            <span class="logo-text">부산온나</span>
+            <span class="logo-sub">BUSAN ONNA</span>
+        </a>
 
-.title_color:hover {
-	color:#007bff;
-	transition: all .3s;
-}
-.navbar-nav > li > .dropdown-menu {
-    margin-top: 0;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    display: block;
-    opacity: 0;
-    transition: ease-out 0.3s;
-}
-/* .dropdown-menu > li{ */
-/*     font-size: 50px; */
-/* } */
-.dropdown-menu1 {
-min-width: 8rem;
-}
-.dropdown:hover .dropdown-menu > li{
-	width:100%;
-    font-size: 1rem;
-}
-.dropdown:hover .dropdown-menu > li:hover{
-	text-align:left;
-	background-color: gray;
-	transition: all .5s;
-/*     font-style: italic; */
-}
-.dropdown:hover .dropdown-menu > li:hover > a{
-	color:white;
-}
-.dropdown:hover .dropdown-menu {
-     opacity:1;
-}
-.dropdown-menu1
-{
-	border:none;
-	display: block;
-  	opacity:1;
-	height: 0px;
-	overflow: hidden;
-	padding: 0px;
-	top: 180px;
-	transition: all .3s;
-}
-.dropdown:hover .dropdown-menu1
-{
-	display:block;
-	top: 70%;
-	height: inherit;
-}
+        <!-- 데스크탑 네비게이션 -->
+        <nav class="header-nav" id="mainNav">
+            <ul class="nav-list">
+                <c:choose>
+                    <c:when test="${sessionScope.user_id == null}">
+                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/member/login">로그인</a></li>
+                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/member/join">회원가입</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="nav-item timer-item">
+                            <span class="timer-badge"><i class="fas fa-clock"></i> <span id="timer"></span></span>
+                        </li>
+                        <li class="nav-item has-dropdown">
+                            <a class="nav-link dropdown-toggle-custom" href="#">
+                                <i class="fas fa-user-circle"></i>&nbsp;${sessionScope.user_name}
+                                <i class="fas fa-chevron-down dropdown-arrow"></i>
+                            </a>
+                            <ul class="dropdown-nav">
+                                <c:choose>
+                                    <c:when test="${sessionScope.user_type == '0'}">
+                                        <li><a href="${pageContext.request.contextPath}/admin/a_index"><i class="fas fa-shield-alt"></i> 관리자페이지</a></li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li><a href="${pageContext.request.contextPath}/member/m_myPage"><i class="fas fa-home"></i> 마이페이지</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/member/mypage/listReservation"><i class="fas fa-calendar-check"></i> 예약내역</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/member/mypage/wishlist"><i class="fas fa-heart"></i> 찜한 숙소</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/member/mypage/myreview"><i class="fas fa-star"></i> 내 리뷰</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/member/mypage/pointList"><i class="fas fa-coins"></i> 포인트내역</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/member/mypage/listInquiry"><i class="fas fa-comment-dots"></i> 1:1 문의</a></li>
+                                    </c:otherwise>
+                                </c:choose>
+                                <li class="divider-item"></li>
+                                <li><a href="#" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> 로그아웃</a></li>
+                            </ul>
+                        </li>
+                    </c:otherwise>
+                </c:choose>
 
+                <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/search/searchP">펜션목록</a></li>
 
-header .navs ul li ul li {
-    padding: 10px;
-
-}
-    </style>
-</head>
-
-    <body>
-     <!--로딩 -->
-		<%@ include file="loading.jsp" %>
-        <header id="menu-jk" class="container-fluid">
-            <div class="row">
-                <div class="col logo">
-               
-                	<a href="${pageContext.request.contextPath }/search/main"><!-- 로고에 메인페이지 링크 추가 -->
-                    	<img src="${pageContext.request.contextPath }/resources/images/busan_onna_logo.png" alt="">
-                    	
-                	</a>
-                	
-                     <a data-toggle="collapse" data-target="#menu" href="#menu"><i class="fas d-block d-md-none  small-menu fa-bars"></i></a>
-                </div>
-                <div class="col-md-auto"></div>
-                <div id="menu" class="col-lg-8 col-md-8	 d-none d-md-block navs ">
-                    <ul>
-<!--                         <li><input type="text" style="visibility: hidden;"></li> -->
-                        <li class="dropdown">
-				           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">	더보기<span class="caret"></span></a>
-				        	<ul class="dropdown-menu dropdown-menu1">
-				            	<li><a href="#" onclick="alert('준비중입니다.')">공지사항</a></li>
-				            	<li><a href="#" onclick="alert('준비중입니다.')">이벤트</a></li>
-				        	</ul>
-				        </li>
-				        <li><a class="title_color" href="${pageContext.request.contextPath }/search/searchP">펜션목록</a></li>
-                     <c:choose> 
-						<c:when test="${sessionScope.user_id == null}">
-							<li><a class="title_color" href="${pageContext.request.contextPath }/member/join">회원가입</a></li>
-							<li><a class="title_color" href="${pageContext.request.contextPath }/member/login">로그인</a></li>
-						</c:when> 
-						<c:otherwise>
-							<li class="dropdown">
-							   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${sessionScope.user_name }<span class="caret"></span></a>
-							   <ul class="dropdown-menu dropdown-menu1">
-							   	  <c:choose>
-							   	  	<c:when test="${sessionScope.user_type == '0'}">
-							   	  		<li style="border-bottom: solid 1px;"><a href="${pageContext.request.contextPath}/admin/a_index">관리자페이지</a></li>
-							   	  	</c:when>
-							   	  	<c:otherwise>
-							   	  		<li><a href="${pageContext.request.contextPath}/member/m_myPage/">마이페이지</a></li>
-							            <li><a href="${pageContext.request.contextPath}/member/mypage/listReservation">예약내역</a></li>
-							            <li><a href="${pageContext.request.contextPath}/member/mypage/myreview" >내가쓴 리뷰</a></li>
-							            <li style="border-bottom: solid 1px;"><a href="${pageContext.request.contextPath}/member/mypage/listInquiry">1:1 문의</a></li>	
-							   	  	</c:otherwise>
-							   	  </c:choose>
-						          <li><a href="#" onclick="logout()">로그아웃</a></li>
-						       </ul>    
-						     </li>
-						</c:otherwise> 
-					</c:choose>
-					<!-- <li><a class="title_color" href="${pageContext.request.contextPath }/map">찾아오는 길</a></li>-->
-					<li id="timer" style=";padding: 0;margin-top: 22px;"></li>
+                <li class="nav-item has-dropdown">
+                    <a class="nav-link dropdown-toggle-custom" href="#">
+                        더보기 <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </a>
+                    <ul class="dropdown-nav">
+                        <li><a href="${pageContext.request.contextPath}/notice/noticeList"><i class="fas fa-bullhorn"></i> 공지사항</a></li>
+                        <li><a href="${pageContext.request.contextPath}/event/eventList"><i class="fas fa-gift"></i> 이벤트</a></li>
                     </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- 우측 아이콘 영역 -->
+        <div class="header-actions">
+            <!-- 다크모드 토글 -->
+            <button class="dark-toggle-btn" id="darkToggleBtn" title="다크모드 전환" aria-label="다크모드 전환">
+                <i class="fas fa-moon" id="darkIcon"></i>
+            </button>
+            <!-- 모바일 햄버거 -->
+            <button class="hamburger-btn" id="hamburgerBtn" aria-label="메뉴 열기">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- =================== 모바일 드로어 (헤더 밖에 위치 - backdrop-filter 격리) =================== -->
+<div class="mobile-nav-drawer" id="mobileDrawer">
+    <div class="mobile-nav-inner">
+        <c:choose>
+            <c:when test="${sessionScope.user_id == null}">
+                <a class="mobile-nav-link" href="${pageContext.request.contextPath}/member/login"><i class="fas fa-sign-in-alt"></i> 로그인</a>
+                <a class="mobile-nav-link" href="${pageContext.request.contextPath}/member/join"><i class="fas fa-user-plus"></i> 회원가입</a>
+            </c:when>
+            <c:otherwise>
+                <div class="mobile-user-info">
+                    <i class="fas fa-user-circle"></i> ${sessionScope.user_name}님
                 </div>
-                <div class="col-sm-1">
-                    <ul>
-<!--                         <li> --> <!-- 페이스북 --> 
-<!--                             <i class="fab fa-facebook-square"></i> -->
-<!--                         </li> -->
-<%-- 							<c:if test="${sessionScope.user_id != null}"> --%>
-<%-- 								<c:choose>  --%>
-<%-- 									<c:when test="${sessionScope.user_type == '0'}"> --%>
-<%-- 										<li><a href="${pageContext.request.contextPath }/admin/a_index">관리자 페이지</a></li> --%>
-<%-- 									</c:when> --%>
-<%-- 									<c:otherwise> --%>
-<%-- 										<li><a href="${pageContext.request.contextPath }/member/m_myPage">My Page</a></li>  --%>
-<%-- 									</c:otherwise>  --%>
-<%-- 								</c:choose> --%>
-<%-- 							</c:if> --%>
-                    </ul>
-                </div>
-            </div>
-        </header>
-        
-<script type="text/javascript">
+                <c:choose>
+                    <c:when test="${sessionScope.user_type == '0'}">
+                        <a class="mobile-nav-link" href="${pageContext.request.contextPath}/admin/a_index"><i class="fas fa-shield-alt"></i> 관리자페이지</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a class="mobile-nav-link" href="${pageContext.request.contextPath}/member/m_myPage"><i class="fas fa-home"></i> 마이페이지</a>
+                        <a class="mobile-nav-link" href="${pageContext.request.contextPath}/member/mypage/listReservation"><i class="fas fa-calendar-check"></i> 예약내역</a>
+                        <a class="mobile-nav-link" href="${pageContext.request.contextPath}/member/mypage/wishlist"><i class="fas fa-heart"></i> 찜한 숙소</a>
+                        <a class="mobile-nav-link" href="${pageContext.request.contextPath}/member/mypage/myreview"><i class="fas fa-star"></i> 내 리뷰</a>
+                        <a class="mobile-nav-link" href="${pageContext.request.contextPath}/member/mypage/pointList"><i class="fas fa-coins"></i> 포인트내역</a>
+                        <a class="mobile-nav-link" href="${pageContext.request.contextPath}/member/mypage/listInquiry"><i class="fas fa-comment-dots"></i> 1:1 문의</a>
+                    </c:otherwise>
+                </c:choose>
+                <a class="mobile-nav-link" href="#" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> 로그아웃</a>
+                <hr class="mobile-divider">
+            </c:otherwise>
+        </c:choose>
+        <a class="mobile-nav-link" href="${pageContext.request.contextPath}/search/searchP"><i class="fas fa-search"></i> 펜션목록</a>
+        <a class="mobile-nav-link" href="${pageContext.request.contextPath}/notice/noticeList"><i class="fas fa-bullhorn"></i> 공지사항</a>
+        <a class="mobile-nav-link" href="${pageContext.request.contextPath}/event/eventList"><i class="fas fa-gift"></i> 이벤트</a>
+    </div>
+</div>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+
+<script>
+// ====== 다크모드 ======
+var $html = document.documentElement;
+var $btn  = document.getElementById('darkToggleBtn');
+var $icon = document.getElementById('darkIcon');
+
+function applyTheme(theme) {
+    $html.setAttribute('data-theme', theme);
+    localStorage.setItem('busanon-theme', theme);
+    if (theme === 'dark') {
+        $icon.classList.replace('fa-moon', 'fa-sun');
+        $btn.title = '라이트모드 전환';
+    } else {
+        $icon.classList.replace('fa-sun', 'fa-moon');
+        $btn.title = '다크모드 전환';
+    }
+}
+
+applyTheme(localStorage.getItem('busanon-theme') || 'light');
+
+$btn.addEventListener('click', function() {
+    applyTheme($html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+// ====== 모바일 드로어 ======
+var drawer    = document.getElementById('mobileDrawer');
+var overlay   = document.getElementById('mobileOverlay');
+var hamburger = document.getElementById('hamburgerBtn');
+
+function openDrawer() {
+    drawer.classList.add('open');
+    overlay.classList.add('show');
+    hamburger.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+function closeDrawer() {
+    drawer.classList.remove('open');
+    overlay.classList.remove('show');
+    hamburger.classList.remove('active');
+    document.body.style.overflow = '';
+}
+hamburger.addEventListener('click', function() {
+    drawer.classList.contains('open') ? closeDrawer() : openDrawer();
+});
+overlay.addEventListener('click', closeDrawer);
+
+// ====== 데스크탑 드롭다운 ======
+document.querySelectorAll('.has-dropdown').forEach(function(item) {
+    var link = item.querySelector('.dropdown-toggle-custom');
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        var isOpen = item.classList.contains('dropdown-open');
+        document.querySelectorAll('.has-dropdown.dropdown-open').forEach(function(el) {
+            el.classList.remove('dropdown-open');
+        });
+        if (!isOpen) item.classList.add('dropdown-open');
+    });
+});
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('.has-dropdown')) {
+        document.querySelectorAll('.has-dropdown.dropdown-open').forEach(function(el) {
+            el.classList.remove('dropdown-open');
+        });
+    }
+});
+
+// ====== 세션 타이머 ======
 var user_id = "${sessionScope.user_id}";
 var ts = 170;
-if(user_id != null && user_id != '' && user_id.length != 0){
-	timer('${pageContext.request.contextPath}',"${sessionScope.TT}", ts);
+if (user_id && user_id.trim() !== '') {
+    timer('${pageContext.request.contextPath}', "${sessionScope.TT}", ts);
 }
 
-
-function logout(){
-	if(confirm("로그아웃 하시겠습니까?")){
-		location.href="${pageContext.request.contextPath }/member/logout";
-	}
+function doLogout() {
+    if (confirm("로그아웃 하시겠습니까?")) {
+        location.href = "${pageContext.request.contextPath}/member/logout";
+    }
+}
+function resettimer() {
+    $.ajax({
+        url: '${pageContext.request.contextPath}/timerreset',
+        type: 'get',
+        success: function(data) {
+            timer('${pageContext.request.contextPath}', data, ts);
+        }
+    });
 }
 
-function resettimer(){
-	
-	$(document).ready(() => {
-		$.ajax({
-			url:'${pageContext.request.contextPath}/timerreset',
-			type:'get',
-			success:(data) => {
-				debugger;
-				timer('${pageContext.request.contextPath}',data, ts);
-			}
-		})
-	})
-	
+// ====== 토스트 알림 (alert 대체) ======
+function showToast(message, type) {
+    type = type || 'info';
+    var icons = { success: '✓', error: '✕', info: 'ℹ', warning: '⚠' };
+    var toast = document.createElement('div');
+    toast.className = 'busanon-toast toast-' + type;
+    toast.innerHTML = '<span class="toast-icon">' + (icons[type] || 'ℹ') + '</span><span>' + message + '</span>';
+    document.body.appendChild(toast);
+    setTimeout(function() {
+        toast.style.opacity = '0';
+        setTimeout(function() { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 350);
+    }, 3200);
 }
+window.alert = function(msg) { showToast(msg, 'info'); };
 </script>
-        

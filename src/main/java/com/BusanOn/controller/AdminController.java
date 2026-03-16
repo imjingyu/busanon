@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.BusanOn.domain.BusinessDTO;
@@ -94,7 +95,8 @@ public class AdminController {
 		Map<String ,Object> sMap = memberListService.customCount();
 		System.out.println(sMap);
 		model.addAttribute("Map",sMap);
-		
+		model.addAttribute("monthlyRevenue", memberListService.getAdminMonthlyRevenue());
+		model.addAttribute("topPensionRevenue", memberListService.getTopPensionRevenue());
 		return "BusanOn/admin/a_index";
 	}
 	
@@ -155,14 +157,36 @@ public class AdminController {
 	
 	@RequestMapping(value = "/admin/a_listReservationAll", method = RequestMethod.GET)
 	public String a_listReservationAll(Model model, ReservationDTO reservationDTO) {
-		
+
 		List<ReservationDTO> listReservationAll = reservationService.listReservationAll(reservationDTO);
 		model.addAttribute("listReservationAll", listReservationAll);
-		
+
 		return "BusanOn/admin/a_listReservationAll";
 	}
-		
-}	
+
+	/* 관리자 알림 벨: 미답변 1:1 문의 목록 (JSON) */
+	@ResponseBody
+	@RequestMapping(value = "/admin/alerts", method = RequestMethod.GET)
+	public Map<String, Object> getAlerts() {
+		List<QnaDTO> list = memberListService.getUnansweredQna();
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("count", list.size());
+		result.put("list", list);
+		return result;
+	}
+
+	/* 관리자 메시지: 최근 7일 예약 목록 (JSON) */
+	@ResponseBody
+	@RequestMapping(value = "/admin/messages", method = RequestMethod.GET)
+	public Map<String, Object> getMessages() {
+		List<ReservationDTO> list = memberListService.getRecentReservations();
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("count", list.size());
+		result.put("list", list);
+		return result;
+	}
+
+}
 		
 
 	

@@ -14,6 +14,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 	<!-- css -->
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/loginSt.css" />
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/auth-premium.css" />
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
@@ -24,45 +25,32 @@
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"> 
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> 
 </head>
-<body>
+<body class="auth-reset">
 <script>
 AOS.init({duration: 1000});
 </script>
 
- <div class="login_form_width" style="padding-top:100px; margin-bottom: 100px">
-
-<!-- 고객 로그인 폼 -->
- <div id="member-login" class="container tab-pane active" data-aos="flip-left" data-aos-anchor-placement="top-bottom" >		
+ <div class="login_form_width">
+ <div id="member-login" class="container tab-pane active">		
   <div class="login">
-    
    <form class="needs-vallidation" action="repassPro?user_id=${memberDTO.user_id}&user_type=${memberDTO.user_type}" method="post" onsubmit="return repassfun()">
-   <div class="fix_title">
-	    <div class="logo">
-	     	<span style="font-size:40px; font-style: italic;"><b>새 비밀번호</b></span><br>
-	    </div>
-   </div>
-    <div class="form-group">
-     <input class="form-control" type="password" name="password" id="password" required placeholder="이메일주소" style="margin-bottom: 5px;" onkeyup="checkPass(this.value)">
-     <div id="passmsg" style="font-size: 15px;"><!-- 패스워드 정규식 조건 만족 여부1 --></div>
-    </div>
-    <br>
-    <div class="fix_title">
-	    <div class="logo">
-	     	<span style="font-size:40px; font-style: italic;"><b>새 비밀번호 확인</b></span><br>
-	    </div>
-   </div>
-    <div class="form-group">
-     <input class="form-control" type="password" name="password2" id="password2" required placeholder="이메일주소" style="margin-bottom: 5px;" onblur="checkRetypePass(this.value)">
-     <div id="pass2msg" style="font-size: 15px;"><!-- 패스워드 일치여부 --></div>
-    </div>
-     
-     
-    <div class="link_half">
-    </div>
-     <input class="btn btn-danger w-100" id="passbtn" type="submit" value="패스워드 변경" style="font-size: 27px; font-family: 'Do Hyeon', sans-serif; padding: 0.75px 0.75px; margin-bottom: 4px;">
+      <div class="reset-title">
+        <h2>새 비밀번호 설정</h2>
+        <p>새로운 비밀번호를 입력한 뒤 다시 한 번 확인해주세요.</p>
+      </div>
+      <div class="form-group">
+         <input class="form-control" type="password" name="password" id="password" required placeholder="새 비밀번호" style="margin-bottom: 5px;" onkeyup="checkPass(this.value)">
+         <div id="passmsg" style="font-size: 15px;"></div>
+      </div>
+      <div class="form-group">
+         <input class="form-control" type="password" name="password2" id="password2" required placeholder="새 비밀번호 확인" style="margin-bottom: 5px;" onblur="checkRetypePass(this.value)">
+         <div id="pass2msg" style="font-size: 15px;"></div>
+      </div>
+      <div class="button-stack">
+         <input class="btn btn-danger w-100" id="passbtn" type="submit" value="패스워드 변경" style="font-size: 27px; font-family: 'Do Hyeon', sans-serif; padding: 0.75px 0.75px;">
+      </div>
    </form>
   </div>
  </div>
-
 </body>
 </html>

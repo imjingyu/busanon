@@ -12,6 +12,7 @@ import com.BusanOn.dao.MemberListDAO;
 import com.BusanOn.domain.MemberDTO;
 import com.BusanOn.domain.PensionDTO;
 import com.BusanOn.domain.QnaDTO;
+import com.BusanOn.domain.ReservationDTO;
 
 @Service
 public class MemberListService {
@@ -53,5 +54,21 @@ public class MemberListService {
 	public List<PensionDTO> pensionlist(){
 		return memberListDAO.pensionlist();
 	}
-	
+
+	public List<QnaDTO> getUnansweredQna(){
+		return memberListDAO.getUnansweredQna();
+	}
+
+	public List<ReservationDTO> getRecentReservations(){
+		return memberListDAO.getRecentReservations();
+	}
+
+	public List<Map<String, Object>> getAdminMonthlyRevenue(){
+		return memberListDAO.getAdminMonthlyRevenue();
+	}
+
+	public List<Map<String, Object>> getTopPensionRevenue(){
+		return memberListDAO.getTopPensionRevenue();
+	}
+
 }

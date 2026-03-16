@@ -13,12 +13,12 @@ import org.apache.ibatis.session.SqlSessionFactory;
 public class AppConfig {
 
     @Bean(name = "uploadPath")
-    public String uploadPath(@Value("${app.upload-path:src/main/webapp/resources/upload}") String uploadPath) {
+    public String uploadPath(@Value("${app.upload-path}") String uploadPath) {
         return uploadPath;
     }
 
     @Bean(name = "reviewUploadPath")
-    public String reviewUploadPath(@Value("${app.review-upload-path:src/main/webapp/resources/images/reviewimage}") String reviewUploadPath) {
+    public String reviewUploadPath(@Value("${app.review-upload-path}") String reviewUploadPath) {
         return reviewUploadPath;
     }
 

@@ -10,9 +10,11 @@ public class PensionDTO {
 	private String pen_zipcode;
 	private String pen_number;
 	private String pen_image;
+	private String pen_introduce;
 	private String star;
 	private String rv;
 	private String rm_price;
+	private String rm_price_max;
 
 	public String getPen_id() {
 		return pen_id;
@@ -57,6 +59,13 @@ public class PensionDTO {
 		this.pen_image = pen_image;
 	}
 
+	public String getPen_introduce() {
+		return pen_introduce;
+	}
+	public void setPen_introduce(String pen_introduce) {
+		this.pen_introduce = pen_introduce;
+	}
+
 	public String getStar() {
 		return star;
 	}
@@ -75,6 +84,12 @@ public class PensionDTO {
 	}
 	public void setRm_price(String rm_price) {
 		this.rm_price = rm_price;
+	}
+	public String getRm_price_max() {
+		return rm_price_max;
+	}
+	public void setRm_price_max(String rm_price_max) {
+		this.rm_price_max = rm_price_max;
 	}
 	
 	public int getCount() {

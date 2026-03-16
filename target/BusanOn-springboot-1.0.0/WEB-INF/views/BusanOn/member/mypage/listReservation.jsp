@@ -1,165 +1,155 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
 <html lang="en">
-
 <head>
-
-	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Free Tour and Travel Website Tempalte | Smarteyeapps.com</title>
-    <link rel="shortcut icon" href="${pageContext.request.contextPath }/resources/images/fav.png" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="${pageContext.request.contextPath }/resources/images/fav.jpg">
-    <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/all.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/animate.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/plugins/slider/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/plugins/slider/css/owl.theme.default.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/style.css" />
-     
-</head>
+    <title>예약내역 | 부산온나</title>
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/fav.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/animate.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/plugins/slider/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/plugins/slider/css/owl.theme.default.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/style.css">
 <style>
-a > b{
-font-size: 19px;
-}
-a > b:hover{
-color:blue;
-}
-
-#dataTable_filter{
-    display: grid;
-    justify-content: end;
-    
-}
+/* 예약내역 페이지 */
+.mypage-hero { background: linear-gradient(90deg, #1a2332 0%, #2d4a6e 45%, #38b2d8 100%); padding: 22px 0; }
+.mypage-hero-inner { max-width:1100px; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+.mypage-hero h1 { color:#fff; font-size:22px; font-weight:800; margin:0; white-space:nowrap; }
+.breadcrumb-line { color:#8fa3c0; font-size:12px; white-space:nowrap; }
+.breadcrumb-line a { color:#8fa3c0; text-decoration:none; }
+.breadcrumb-line a:hover { color:#fff; }
+.back-btn { display:inline-flex; align-items:center; gap:6px; padding:10px 24px; border:1.5px solid #e2e8f0; border-radius:10px; background:#fff; color:#718096; font-size:15px; font-family:'Do Hyeon',sans-serif; text-decoration:none; }
+.back-btn:hover { color:#38b2d8; border-color:#38b2d8; }
+.mypage-content { background:#f7f9fc; min-height:60vh; padding:36px 0 60px; }
+.mypage-card { background:#fff; border-radius:14px; box-shadow:0 2px 20px rgba(0,0,0,.08); overflow:hidden; max-width:1100px; margin:0 auto; }
+.mypage-card-head { padding:20px 28px; border-bottom:1px solid #f0f4f8; display:flex; align-items:center; justify-content:space-between; }
+.mypage-card-head h5 { margin:0; font-size:16px; font-weight:700; color:#1a2332; }
+.mypage-card-body { padding:0; }
+/* 새 테이블 디자인 */
+.modern-table { width:100%; border-collapse:collapse; }
+.modern-table thead tr { border-bottom:2px solid #38b2d8; }
+.modern-table thead th { padding:13px 20px; font-size:13px; font-weight:700; color:#2d4a6e; background:#f0f7ff; white-space:nowrap; text-align:center; }
+.modern-table tbody tr { border-bottom:1px solid #f0f4f8; transition:background 0.12s; }
+.modern-table tbody tr:last-child { border-bottom:none; }
+.modern-table tbody tr:hover { background:#f7fbff; }
+.modern-table tbody td { padding:14px 20px; font-size:14px; color:#4a5568; vertical-align:middle; text-align:center; }
+.tbl-empty td { text-align:center !important; padding:60px 20px !important; }
+.tbl-empty-icon { font-size:40px; color:#cbd5e0; margin-bottom:12px; }
+.tbl-empty-msg { font-size:15px; font-weight:600; color:#718096; margin:0; }
+.res-status-confirmed { color:#38b2d8; font-weight:700; }
+.res-status-cancel { color:#e53e3e; font-weight:700; }
+.res-status-locked { color:#48bb78; font-weight:700; }
 </style>
+</head>
 <body>
-<!--헤더 -->
 <%@ include file="../../header.jsp" %>
- 
-<!--  ************************* Page Title Starts Here ************************** -->
-<div class="page-nav no-margin row">
-    <div class="container">
-        <div class="row">
-            <h2>예약내역조회</h2>
-        </div>
+
+<div class="mypage-hero">
+    <div class="mypage-hero-inner">
+        <div class="breadcrumb-line"><a href="${pageContext.request.contextPath}/search/main">홈</a> &rsaquo; <a href="${pageContext.request.contextPath}/member/m_myPage">마이페이지</a> &rsaquo; 예약내역</div>
+        <h1><i class="fas fa-calendar-check" style="color:#38b2d8;margin-right:10px;"></i>예약내역 조회</h1>
     </div>
 </div>
 
-<!-- 마이페이지 폼 시작-->
-<!-- Begin Page Content -->
-                <div class="container-fluid">
-                    <!-- DataTales Example -->
-                    <div class="card shadow my-5">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">예약내역조회</h6>
-                        </div>
-                        <div class="card-body">
-                            <div>
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr class="text-center">
-                                            <th>예약번호</th>
-                                            <th style="width: 20%">숙소이름</th>
-                                            <th style="width: 20%">방 이름</th>
-                                            <th>체크인</th>
-                                            <th>체크아웃</th>
-                                            <th>예약상태</th>
-                                            <th>예약취소</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    	<c:forEach items="${list}" var="r">
-	                                        <tr>
-	                                            <td class="text-center">${r.res_number}</td>
-	                                            <td class="text-center"><a href="${pageContext.request.contextPath }/search/pensionDetail?pen_id=${r.pen_id}&pen_name=${r.pen_name}"><b>${r.pen_name}</b></a></td>
-	                                            <td class="text-center">${r.rm_name}</td>
-	                                            <td class="text-center">${r.check_in_d}</td>
-	                                            <td class="text-center">${r.check_out_d}</td>
-	                                            <td class="text-center">
-	                                            <c:choose>
-	                                            <c:when test="${r.res_status == '1'}">
-	                                            <span style="color:blue"><b>예약확정</b></span>
-	                                            </c:when>
-	                                            <c:when test="${r.res_status == '2'}">
-	                                            <span style="color:green;"><b>취소불가</b></span>
-	                                            </c:when>
-	                                            <c:otherwise>
-	                                            <span style="color:red"><b>취소완료</b></span>
-	                                            </c:otherwise>
-	                                            </c:choose>
-	                                            
-	                                            </td>
-	                                            <td style="text-align: center;">
-	                                            <c:choose>
-	                                            <c:when test="${r.res_status == '1'}">
-	                                            <button class="btn btn-primary w-30" style="border-radius:7px;font-family: 'Do Hyeon', sans-serif;" onclick="cancelreservation('${r.res_number}')" >취소하기
-	                                             </button> 
-	                                            </c:when>
-	                                            <c:otherwise>
-	                                            <input type="button" value="취소하기" style="width:90px; height:38px; border:none; border-radius:7px; height: 40px; background-color: gray; color:white; font-family: 'Do Hyeon', sans-serif;" disabled>
-	                                            </c:otherwise>
-	                                            </c:choose>
-	                                             
-	                                            </td>
-<!-- 	                                            <td class="text-center"> -->
-<%-- 	                                            <c:choose> --%>
-<%-- 	                                            <c:when test="${r.res_status}"> --%>
-<!-- 	                                            <b style="color: purple;">예약</b> -->
-<%-- 	                                            </c:when> --%>
-<%-- 	                                            <c:otherwise> --%>
-<!-- 	                                            <b style="color: red;">취소</b> -->
-<%-- 	                                            </c:otherwise> --%>
-<%-- 	                                            </c:choose> --%>
-<!-- 	                                            </td> -->
-	                                        </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="mypage-content">
+<div style="max-width:1100px;margin:0 auto;padding:0 16px;">
+<div class="mypage-card">
+    <div class="mypage-card-head">
+        <h5><i class="fas fa-list" style="color:#38b2d8;margin-right:8px;"></i>나의 예약 목록</h5>
+    </div>
+    <div class="mypage-card-body">
+        <div style="overflow-x:auto;">
+            <table class="modern-table" width="100%">
+                <thead>
+                    <tr>
+                        <th>예약번호</th>
+                        <th style="width:20%;">숙소이름</th>
+                        <th style="width:20%;">방 이름</th>
+                        <th>체크인</th>
+                        <th>체크아웃</th>
+                        <th>예약상태</th>
+                        <th>예약취소</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <c:choose>
+                    <c:when test="${empty list}">
+                        <tr class="tbl-empty">
+                            <td colspan="7">
+                                <div class="tbl-empty-icon"><i class="fas fa-calendar-times"></i></div>
+                                <p class="tbl-empty-msg">예약 내역이 없습니다.</p>
+                            </td>
+                        </tr>
+                    </c:when>
+                    <c:otherwise>
+                        <c:forEach items="${list}" var="r">
+                            <tr>
+                                <td>${r.res_number}</td>
+                                <td>
+                                    <a href="${pageContext.request.contextPath}/search/pensionDetail?pen_id=${r.pen_id}&pen_name=${r.pen_name}"
+                                       style="color:#38b2d8;font-weight:600;">${r.pen_name}</a>
+                                </td>
+                                <td>${r.rm_name}</td>
+                                <td>${r.check_in_d}</td>
+                                <td>${r.check_out_d}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${r.res_status == '1'}">
+                                            <span class="res-status-confirmed">예약확정</span>
+                                        </c:when>
+                                        <c:when test="${r.res_status == '2'}">
+                                            <span class="res-status-locked">취소불가</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="res-status-cancel">취소완료</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${r.res_status == '1'}">
+                                            <button class="btn btn-primary btn-sm" style="border-radius:7px;font-family:'Do Hyeon',sans-serif;padding:6px 14px;"
+                                                    onclick="cancelreservation('${r.res_number}')">취소하기</button>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <button class="btn btn-secondary btn-sm" style="border-radius:7px;font-family:'Do Hyeon',sans-serif;padding:6px 14px;" disabled>취소하기</button>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+</div>
 
+<div style="margin-top:28px;text-align:center;">
+    <a href="${pageContext.request.contextPath}/member/m_myPage" class="back-btn">
+        <i class="fas fa-arrow-left"></i> 마이페이지로
+    </a>
+</div>
 
-<!-- 마이페이지 폼 끝-->
-
-<!--  ************************* Footer Start Here ************************** --> 
-
-    <script type="text/javascript">
-    function cancelreservation(res_number){
-    	if(confirm('취소하시겠습니까?')){
-    		location.href='listReservation2?res_number='+res_number+'';
-    	}
+<script type="text/javascript">
+function cancelreservation(res_number) {
+    if (confirm('취소하시겠습니까?')) {
+        location.href = 'listReservation2?res_number=' + res_number;
     }
-    </script>
-    
-    <script>
-		$(function() {
-			$('#dataTable').DataTable({
-				order : [[2,"desc"]]
-			})
-		})
-	</script>
-	
-	<script src="${pageContext.request.contextPath }/resources/assets/js/jquery-3.2.1.min.js"></script>
-    <script src="${pageContext.request.contextPath }/resources/assets/js/popper.min.js"></script>
-    <script src="${pageContext.request.contextPath }/resources/assets/js/bootstrap.min.js"></script>
-    <script src="${pageContext.request.contextPath }/resources/assets/plugins/scroll-fixed/jquery-scrolltofixed-min.js"></script>
-    <script src="${pageContext.request.contextPath }/resources/assets/plugins/slider/js/owl.carousel.min.js"></script>
-    <script src="${pageContext.request.contextPath }/resources/assets/js/script.js"></script>
-    <script src="${pageContext.request.contextPath }/resources/assets/admin/vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="${pageContext.request.contextPath }/resources/assets/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-<%--     <script src="${pageContext.request.contextPath }/resources/assets/admin/vendor/jquery/jquery.min.js"></script> --%>
-<%--     <script src="${pageContext.request.contextPath }/resources/assets/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> --%>
+}
+</script>
 
-<!--     Core plugin JavaScript -->
-<%--     <script src="${pageContext.request.contextPath }/resources/assets/admin/vendor/jquery-easing/jquery.easing.min.js"></script> --%>
+<%@ include file="../../footer.jsp" %>
 
-<!--     Custom scripts for all pages -->
-<%--     <script src="${pageContext.request.contextPath }/resources/assets/admin/js/sb-admin-2.min.js"></script> --%>
-    
-    </body>
-   
+<script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+</body>
 </html>

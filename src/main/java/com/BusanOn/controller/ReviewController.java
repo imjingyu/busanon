@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.BusanOn.domain.ReviewDTO;
 import com.BusanOn.function.FunctionClass;
+import com.BusanOn.service.PointService;
 import com.BusanOn.service.ReviewService;
 
 
@@ -33,6 +34,10 @@ public class ReviewController {
 	
 	@Inject
 	private ReviewService service;
+
+	@Inject
+	private PointService pointService;
+
 	@Resource(name="reviewUploadPath")
 	private String uploadPath;
 
@@ -60,6 +65,9 @@ public class ReviewController {
 		rT.setRev_num(count);
 		rT.setRev_date(new FunctionClass().nowTime("yyyy-MM-dd"));
 		service.insertreview(rT);
+		String user_id = rT.getUser_id();
+		String user_type = rT.getUser_type();
+		pointService.addPoint(user_id, user_type, "EARN", 200, "리뷰 작성 포인트 적립");
 		String rpen_name = URLEncoder.encode(pen_name, "UTF-8");
 		return "redirect:/search/pensionDetail?pen_id="+rT.getPen_id()+"&pen_name="+rpen_name+"&rm_checkin="+rm_checkin+"&rm_checkout="+rm_checkout+"";
 	}

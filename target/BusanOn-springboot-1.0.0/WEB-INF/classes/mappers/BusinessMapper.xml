@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -24,7 +24,10 @@
 			     , COUNT(R.REV_NUM) AS RV
 			     , (SELECT IFNULL( MIN(CAST(RM_PRICE AS UNSIGNED)) , 0)
 					  FROM PENSION_ROOM
-					 WHERE PEN_ID = P.PEN_ID) AS RM
+					 WHERE PEN_ID = P.PEN_ID) AS RM_PRICE
+			     , (SELECT IFNULL( MAX(CAST(RM_PRICE AS UNSIGNED)) , 0)
+					  FROM PENSION_ROOM
+					 WHERE PEN_ID = P.PEN_ID) AS RM_PRICE_MAX
 			        
 			 FROM PENSION P LEFT OUTER JOIN PENSION_ATTACH A
 										    ON P.PEN_ID = A.PEN_ID
@@ -38,25 +41,16 @@
 			  AND PEN_ADDRESS LIKE '%${pen_address}%'
 			</if> 
 			
-		 	GROUP BY P.PEN_ID, P.PEN_NAME, A.PEN_IMAGE
+		 	GROUP BY P.PEN_ID, P.PEN_NAME, P.PEN_ADDRESS, A.PEN_IMAGE
 		 	
-		 	<if test="order != null and !order.equals('')">
-		 		<if test="order == 'rev' or order.equals('rev')">
-			 	ORDER BY COUNT(R.REV_NUM) DESC
-			 	</if>
-			 	<if test="order == 'hPr' or order.equals('hPr')">
-			 	ORDER BY RM_PRICE DESC
-			 	</if>
-			 	<if test="order == 'lPr' or order.equals('lPr')">
-			 	ORDER BY RM_PRICE
-			 	</if>
-		 	</if>
-	 		 ) A
-	 	
-		 LIMIT ${index}
-		     , ${amount}
-	 
-	</select> 
+		  ) A
+		<if test="order != null and !order.equals('')">
+			<if test="order == 'rev' or order.equals('rev')">ORDER BY CAST(RV AS UNSIGNED) DESC</if>
+			<if test="order == 'hPr' or order.equals('hPr')">ORDER BY CAST(RM_PRICE AS UNSIGNED) DESC</if>
+			<if test="order == 'lPr' or order.equals('lPr')">ORDER BY CAST(RM_PRICE AS UNSIGNED) ASC</if>
+		</if>
+		LIMIT ${index}, ${amount}
+	</select>
 	
 	<!--메인페이지 top6 숙소 -->
 	<select id="getTopList" resultType="com.BusanOn.domain.PensionDTO">
@@ -82,7 +76,8 @@
 		       				PEN_NAME,
 		       				PEN_ADDRESS,
 		       				PEN_ZIPCODE,
-		       				PEN_NUMBER
+		       				PEN_NUMBER,
+		       				PEN_INTRODUCE
 							)
 		VALUES(
 			   #{PEN_ID},
@@ -91,7 +86,8 @@
 		       #{PEN_NAME},
 		       #{PEN_ADDRESS},
 		       #{PEN_ZIPCODE},
-		       #{PEN_NUMBER})
+		       #{PEN_NUMBER},
+		       #{PEN_INTRODUCE})
 	</insert>
 	
 	<!-- PENSION_ATTACH Table(팬션 사진 테이블) 입력 SQL구문 -->
@@ -179,8 +175,9 @@
 	<select id="getPensionDetail" resultType="com.BusanOn.domain.PensionDTO">
 		SELECT P.PEN_NAME
 		     , P.PEN_ADDRESS
+		     , P.PEN_INTRODUCE
 		     , A.PEN_IMAGE
-		  FROM PENSION P JOIN PENSION_ATTACH A
+		  FROM PENSION P LEFT JOIN PENSION_ATTACH A
 		                   ON P.PEN_ID = A.PEN_ID
 		 WHERE P.PEN_ID = #{PEN_ID};
 	</select>
@@ -351,4 +348,64 @@
 		   AND MONTH(STR_TO_DATE(R.RES_TIME, '%Y-%m-%d')) = MONTH(CURRENT_DATE())
 		   AND RES_STATUS = '1';
  	</select>
+
+	<!-- 사업자 알림: 최근 7일 새 예약 (최근 5건) -->
+	<select id="getRecentReservationsForBusiness" parameterType="String" resultType="com.BusanOn.domain.ReservationDTO">
+		SELECT R.RES_NUMBER
+		     , P.PEN_NAME
+		     , R.RM_NAME
+		     , M.USER_NAME
+		     , R.USER_ID
+		     , R.CHECK_IN_D
+		     , R.RES_TIME
+		  FROM RESERVATION R LEFT JOIN PENSION P ON P.PEN_ID = R.PEN_ID
+		                     LEFT JOIN MEMBER M ON M.USER_ID = R.USER_ID AND M.USER_TYPE = R.USER_TYPE
+		 WHERE P.USER_ID = #{user_id}
+		   AND STR_TO_DATE(R.RES_TIME, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+		 ORDER BY R.RES_NUMBER DESC
+		 LIMIT 5
+	</select>
+
+	<!-- 사업자 알림: 미답변 리뷰 (최근 5건) -->
+	<select id="getUnansweredReviewsForBusiness" parameterType="String" resultType="com.BusanOn.domain.ReviewDTO">
+		SELECT A.REV_NUM
+		     , A.PEN_ID
+		     , A.REV_TITLE
+		     , A.REV_STAR
+		     , A.REV_DATE
+		     , A.USER_ID
+		     , B.USER_NAME
+		  FROM REVIEW A JOIN MEMBER B
+		    ON A.USER_ID = B.USER_ID AND A.USER_TYPE = B.USER_TYPE
+		 WHERE A.PEN_ID IN (SELECT PEN_ID FROM PENSION WHERE USER_ID = #{user_id})
+		   AND (A.REPLY IS NULL OR A.REPLY != 'Y')
+		 ORDER BY A.REV_NUM DESC
+		 LIMIT 5
+	</select>
+
+	<!-- 사업자 월별 매출 (최근 6개월) -->
+	<select id="getMonthlyRevenueForBusiness" parameterType="String" resultType="map">
+		SELECT DATE_FORMAT(STR_TO_DATE(R.RES_TIME, '%Y-%m-%d'), '%Y-%m') AS MON
+		     , IFNULL(SUM(CAST(R.RM_PRICE AS UNSIGNED)), 0) AS AMOUNT
+		     , COUNT(R.RES_NUMBER) AS CNT
+		  FROM RESERVATION R JOIN PENSION P ON P.PEN_ID = R.PEN_ID
+		 WHERE P.USER_ID = #{user_id}
+		   AND R.RES_STATUS = '1'
+		   AND STR_TO_DATE(R.RES_TIME, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+		 GROUP BY MON
+		 ORDER BY MON ASC
+	</select>
+
+	<!-- 사업자 방별 매출 (도넛 차트용) -->
+	<select id="getRoomRevenueForBusiness" parameterType="String" resultType="map">
+		SELECT R.RM_NAME
+		     , IFNULL(SUM(CAST(R.RM_PRICE AS UNSIGNED)), 0) AS AMOUNT
+		  FROM RESERVATION R JOIN PENSION P ON P.PEN_ID = R.PEN_ID
+		 WHERE P.USER_ID = #{user_id}
+		   AND R.RES_STATUS = '1'
+		 GROUP BY R.RM_NAME
+		 ORDER BY AMOUNT DESC
+		 LIMIT 5
+	</select>
+
 </mapper>

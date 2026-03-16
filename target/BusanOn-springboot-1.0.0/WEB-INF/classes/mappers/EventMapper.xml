@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.BusanOn.mappers.eventMapper">
+
+    <select id="eventCount" resultType="int">
+        SELECT COUNT(EVENT_ID) FROM EVENT
+    </select>
+
+    <select id="selectEventList" resultType="com.BusanOn.domain.EventDTO">
+        SELECT EVENT_ID, TITLE, WRITER_ID, START_DATE, END_DATE, STATUS, CREATED_AT
+        FROM EVENT
+        ORDER BY EVENT_ID DESC
+        LIMIT ${index}, ${amount}
+    </select>
+
+    <select id="selectEventDetail" resultType="com.BusanOn.domain.EventDTO">
+        SELECT EVENT_ID, TITLE, CONTENT, WRITER_ID, START_DATE, END_DATE, STATUS, CREATED_AT
+        FROM EVENT
+        WHERE EVENT_ID = #{event_id}
+    </select>
+
+    <insert id="insertEvent">
+        INSERT INTO EVENT (TITLE, CONTENT, WRITER_ID, START_DATE, END_DATE, STATUS, CREATED_AT)
+        VALUES (#{title}, #{content}, #{writer_id}, #{start_date}, #{end_date}, 'Y', NOW())
+    </insert>
+
+    <update id="updateEventViews">
+        UPDATE EVENT SET EVENT_ID = EVENT_ID WHERE EVENT_ID = #{event_id}
+    </update>
+
+    <delete id="deleteEvent">
+        DELETE FROM EVENT WHERE EVENT_ID = #{event_id}
+    </delete>
+
+</mapper>

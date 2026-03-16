@@ -44,8 +44,8 @@
 	                
 <%-- 	                <a class="collapse-item" href="${pageContext.request.contextPath }/admin/pensionAdStatus">- 펜션 광고 승인</a> --%>
 <%-- 	                <a class="collapse-item" href="${pageContext.request.contextPath }/admin/pensionListWithAd">- 광고 목록 조회</a> --%>
-	                <a class="collapse-item" href="#" onclick="alert('준비중입니다.')">- 펜션 광고 승인</a>
-	                <a class="collapse-item" href="#" onclick="alert('준비중입니다.')">- 광고 목록 조회</a>
+	                <a class="collapse-item" href="${pageContext.request.contextPath}/admin/a_pensionlist">- 펜션 광고 승인</a>
+	                <a class="collapse-item" href="${pageContext.request.contextPath}/admin/a_pensionlist">- 광고 목록 조회</a>
 	            </div>
 	        </div>
 	    </li>
@@ -58,9 +58,11 @@
 	        </a>
 	        <div id="collapsePages3" class="collapse" aria-labelledby="headingPages3" data-parent="#accordionSidebar">
 	            <div class="bg-white py-2 collapse-inner rounded">
-	                <a class="collapse-item" href="${pageContext.request.contextPath }/admin/a_reviewlist">- 리뷰 관리</a>
-	                <a class="collapse-item" href="${pageContext.request.contextPath }/admin/a_paymentlist">- 전체 매출 조회</a>
-	                <a class="collapse-item" href="#" onclick="alert('준비중입니다.')">- 관리자 권한 부여</a>
+	                <a class="collapse-item" href="${pageContext.request.contextPath}/admin/a_reviewlist">- 리뷰 관리</a>
+	                <a class="collapse-item" href="${pageContext.request.contextPath}/admin/a_paymentlist">- 전체 매출 조회</a>
+	                <a class="collapse-item" href="${pageContext.request.contextPath}/admin/noticeList">- 공지사항 관리</a>
+	                <a class="collapse-item" href="${pageContext.request.contextPath}/admin/eventList">- 이벤트 관리</a>
+	                <a class="collapse-item" href="${pageContext.request.contextPath}/admin/a_memberList">- 관리자 권한 부여</a>
 	            </div>
 	        </div>
 	    </li>
@@ -86,3 +88,24 @@
 	    </div>
 	</ul>
 	<!-- End of Sidebar -->
+
+<script>
+$(document).ready(function() {
+    var url = window.location.pathname;
+    $('#accordionSidebar a.collapse-item').each(function() {
+        var href = $(this).attr('href');
+        if (href && url.indexOf(href.split('?')[0].replace(/.*\//, '')) !== -1) {
+            $(this).addClass('active font-weight-bold');
+            var collapseEl = $(this).closest('.collapse');
+            collapseEl.addClass('show');
+            collapseEl.prev('.nav-link').removeClass('collapsed').attr('aria-expanded', 'true');
+        }
+    });
+    $('#accordionSidebar a.nav-link:not([data-toggle])').each(function() {
+        var href = $(this).attr('href');
+        if (href && url.indexOf(href.split('?')[0].replace(/.*\//, '')) !== -1) {
+            $(this).closest('.nav-item').addClass('active');
+        }
+    });
+});
+</script>

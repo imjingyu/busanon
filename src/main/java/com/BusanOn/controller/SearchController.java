@@ -106,6 +106,13 @@ public class SearchController {
 
 		/* 펜션 리스트 불러오기 */
 		List<PensionDTO> pensionList = searchService.getPensionList(map);
+		for (PensionDTO dto : pensionList) {
+			if (dto.getRm_price() != null && !dto.getRm_price().isEmpty()) {
+				dto.setRm_price(dto.getRm_price().replaceAll("\\B(?=(\\d{3})+(?!\\d))", ","));
+			} else {
+				dto.setRm_price("0");
+			}
+		}
 		model.addAttribute("pensionList", pensionList);
 		//System.out.println(pensionList.size() + " 펜션리스트 사이즈");
 		model.addAttribute("page", map);
@@ -192,7 +199,11 @@ public class SearchController {
 		/* 펜션 리스트 불러오기 */
 		List<PensionDTO> pensionList = searchService.getPensionList(map);
 		for (PensionDTO dto : pensionList) {
-			dto.setRm_price(dto.getRm_price().replaceAll("\\B(?=(\\d{3})+(?!\\d))", ","));
+			if (dto.getRm_price() != null && !dto.getRm_price().isEmpty()) {
+				dto.setRm_price(dto.getRm_price().replaceAll("\\B(?=(\\d{3})+(?!\\d))", ","));
+			} else {
+				dto.setRm_price("0");
+			}
 		}
 		System.out.println(pensionList.size() + " - list");
 		model.addAttribute("pensionList", pensionList);

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.BusanOn.mappers.WishlistMapper">
+
+    <!-- DDL: 서버 기동 시 테이블이 없으면 아래 SQL로 생성하세요
+    CREATE TABLE IF NOT EXISTS wishlist (
+        wish_id  INT AUTO_INCREMENT PRIMARY KEY,
+        user_id  VARCHAR(50) NOT NULL,
+        pen_id   VARCHAR(50) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE KEY uq_wish (user_id, pen_id)
+    );
+    -->
+
+    <!-- 찜 추가 -->
+    <insert id="insertWishlist" parameterType="map">
+        INSERT IGNORE INTO wishlist (user_id, pen_id)
+        VALUES (#{user_id}, #{pen_id})
+    </insert>
+
+    <!-- 찜 삭제 -->
+    <delete id="deleteWishlist" parameterType="map">
+        DELETE FROM wishlist
+        WHERE user_id = #{user_id} AND pen_id = #{pen_id}
+    </delete>
+
+    <!-- 찜 여부 확인 -->
+    <select id="checkWishlist" parameterType="map" resultType="int">
+        SELECT COUNT(*) FROM wishlist
+        WHERE user_id = #{user_id} AND pen_id = #{pen_id}
+    </select>
+
+    <!-- 찜 목록 (펜션 정보 JOIN) -->
+    <select id="getWishlist" parameterType="string" resultType="com.BusanOn.domain.WishlistDTO">
+        SELECT
+            w.wish_id,
+            w.user_id,
+            w.pen_id,
+            DATE_FORMAT(w.created_at, '%Y.%m.%d') AS created_at,
+            p.pen_name,
+            p.pen_address,
+            att.pen_image,
+            IFNULL(ROUND(AVG(r.rev_star), 1), 0) AS star,
+            COUNT(r.rev_num)                      AS rv,
+            IFNULL(MIN(rm.rm_price), 0)           AS rm_price
+        FROM wishlist w
+        JOIN PENSION   p  ON p.pen_id  = w.pen_id
+        LEFT JOIN REVIEW      r  ON r.pen_id  = p.pen_id
+        LEFT JOIN PENSION_ROOM rm ON rm.pen_id = p.pen_id
+        LEFT JOIN PENSION_ATTACH att ON att.pen_id = p.pen_id
+        WHERE w.user_id = #{user_id}
+        GROUP BY w.wish_id, w.user_id, w.pen_id, w.created_at,
+                 p.pen_name, p.pen_address, att.pen_image
+        ORDER BY w.created_at DESC
+    </select>
+
+</mapper>

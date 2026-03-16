@@ -21,5 +21,7 @@
 
     <!-- Custom styles for this page -->
     <link href="${pageContext.request.contextPath }/resources/assets/admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    
-    
+    <link href="${pageContext.request.contextPath }/resources/assets/admin/css/admin-premium.css" rel="stylesheet">
+
+    <!-- jQuery - 반드시 head에서 로드 (b_nav.jsp AJAX 스크립트 의존) -->
+    <script src="${pageContext.request.contextPath}/resources/assets/admin/vendor/jquery/jquery.min.js"></script>

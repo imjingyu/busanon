@@ -15,18 +15,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.BusanOn.domain.MemberDTO;
+import com.BusanOn.domain.PointDTO;
 import com.BusanOn.domain.QnaDTO;
 import com.BusanOn.domain.ReservationDTO;
 import com.BusanOn.domain.ReviewDTO;
 import com.BusanOn.function.FunctionClass;
 import com.BusanOn.service.MemberService;
+import com.BusanOn.service.PointService;
 
 @Controller
 public class MemberMyPageController {
 	
 	@Inject
 	private MemberService service;
-	
+
+	@Inject
+	private PointService pointService;
+
 //	ㄴ
 	@RequestMapping(value = "/member/m_myPage", method = RequestMethod.GET)
 	public String m_myPage() {
@@ -139,13 +144,27 @@ public class MemberMyPageController {
 	
 	@RequestMapping(value = "/member/mypage/qnainput", method = RequestMethod.GET)
 	public String qnainput(QnaDTO qT, HttpSession session) {
-		
+
 		qT.setUser_id(session.getAttribute("user_id").toString());
 		qT.setUser_type(session.getAttribute("user_type").toString());
 		qT.setTime(new FunctionClass().nowTime("yyyy-MM-dd HH:mm"));
 		qT.setReply("N");
 		service.insertqna(qT);
 		return "redirect:/member/mypage/listInquiry";
+	}
+
+	@RequestMapping(value = "/member/mypage/pointList", method = RequestMethod.GET)
+	public String pointList(HttpSession session, Model model) {
+		String user_id = session.getAttribute("user_id").toString();
+		String user_type = session.getAttribute("user_type").toString();
+		Map<String, Object> para = new HashMap<>();
+		para.put("user_id", user_id);
+		para.put("user_type", user_type);
+		List<PointDTO> pointList = pointService.selectPointList(para);
+		int balance = pointService.selectPointBalance(para);
+		model.addAttribute("pointList", pointList);
+		model.addAttribute("balance", balance);
+		return "BusanOn/member/mypage/pointList";
 	}
 }
 

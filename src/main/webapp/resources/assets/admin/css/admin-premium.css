@@ -1,0 +1,94 @@
+@charset "UTF-8";
+
+/* =============================================
+   Admin Premium Theme - 관리자 / 사업자 공통
+   ============================================= */
+
+:root {
+  --adm-bg: #edf7ff;
+  --adm-line: rgba(109,169,255,0.16);
+  --adm-text: #17324d;
+  --adm-sub: #64819c;
+  --adm-primary: #2f7edb;
+  --adm-secondary: #47b0da;
+}
+
+/* 배경 */
+body, #wrapper, #content-wrapper, .content-wrapper, #content {
+  background: linear-gradient(180deg, #eef7ff 0%, #dff0ff 100%) !important;
+  color: var(--adm-text);
+}
+
+/* 사이드바 */
+.sidebar {
+  background: linear-gradient(180deg, #204a73 0%, #163753 100%) !important;
+  box-shadow: 18px 0 45px rgba(55, 105, 168, 0.16);
+}
+.sidebar .nav-item .nav-link,
+.sidebar .sidebar-brand,
+.sidebar .nav-item .nav-link i,
+.sidebar .nav-link span,
+.sidebar .sidebar-brand-text,
+.sidebar .fas,
+.sidebar .far {
+  color: rgba(255,255,255,0.96) !important;
+}
+
+/* 상단바 */
+.topbar {
+  background: #fff !important;
+  border: 1px solid #c4daed !important;
+  box-shadow: 0 16px 36px rgba(46, 91, 145, 0.10) !important;
+}
+
+/* 카드 / 테이블 / 모달 */
+.card, .table-responsive, .modal-content, .dropdown-menu {
+  background: #fff !important;
+  border: 1px solid #c4daed !important;
+  border-radius: 16px !important;
+  box-shadow: 0 14px 32px rgba(31, 74, 120, 0.10) !important;
+}
+.card .card-header {
+  background: transparent !important;
+  border-bottom: 1px solid var(--adm-line) !important;
+  color: var(--adm-text) !important;
+}
+
+/* 테이블 텍스트 */
+.table th, .table td,
+.card-header, .text-gray-800, .text-gray-900, .text-xs,
+.h3, h1, h2, h3, h4, h5, h6, p, span, div, label, small {
+  color: var(--adm-text) !important;
+}
+.table thead th {
+  background: rgba(230,243,255,0.95);
+  border-bottom: 1px solid var(--adm-line) !important;
+  color: var(--adm-sub);
+}
+.table td, .table th { border-top-color: rgba(109,169,255,0.10) !important; }
+
+/* 버튼 */
+.btn-primary, .btn-danger, .btn-success, .btn-info, .btn-warning,
+.page-item.active .page-link {
+  background: linear-gradient(135deg, var(--adm-primary), var(--adm-secondary)) !important;
+  border: none !important;
+  color: #fff !important;
+  box-shadow: 0 6px 18px rgba(47, 126, 219, 0.22);
+}
+
+/* 폼 */
+.form-control, .custom-select, textarea {
+  border-radius: 10px !important;
+  border: 1px solid var(--adm-line) !important;
+  background: #f8fbff !important;
+}
+.form-control:focus, .custom-select:focus, textarea:focus {
+  box-shadow: 0 0 0 3px rgba(47, 126, 219, 0.12) !important;
+  border-color: rgba(47, 126, 219, 0.45) !important;
+}
+
+/* DataTables */
+.dataTables_wrapper { padding: 20px; }
+
+/* 기타 */
+.text-primary { color: var(--adm-primary) !important; }

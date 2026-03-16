@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.BusanOn.mappers.pointMapper">
+
+    <select id="selectPointBalance" resultType="int">
+        SELECT IFNULL(
+            (SELECT BALANCE FROM POINT
+              WHERE USER_ID = #{user_id} AND USER_TYPE = #{user_type}
+              ORDER BY POINT_ID DESC LIMIT 1),
+            0)
+    </select>
+
+    <select id="selectPointList" resultType="com.BusanOn.domain.PointDTO">
+        SELECT POINT_ID, USER_ID, USER_TYPE, POINT_TYPE, POINT_AMOUNT, DESCRIPTION, BALANCE, CREATED_AT
+        FROM POINT
+        WHERE USER_ID = #{user_id} AND USER_TYPE = #{user_type}
+        ORDER BY POINT_ID DESC
+    </select>
+
+    <insert id="insertPoint">
+        INSERT INTO POINT (USER_ID, USER_TYPE, POINT_TYPE, POINT_AMOUNT, DESCRIPTION, BALANCE, CREATED_AT)
+        VALUES (#{user_id}, #{user_type}, #{point_type}, #{point_amount}, #{description}, #{balance}, NOW())
+    </insert>
+
+</mapper>

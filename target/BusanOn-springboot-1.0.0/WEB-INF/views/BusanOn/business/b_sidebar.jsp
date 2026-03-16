@@ -77,3 +77,24 @@
 	    </div>
 	</ul>
 	<!-- End of Sidebar -->
+
+<script>
+$(document).ready(function() {
+    var url = window.location.pathname;
+    $('#accordionSidebar a.collapse-item').each(function() {
+        var href = $(this).attr('href');
+        if (href && url.indexOf(href.split('?')[0].replace(/.*\//, '')) !== -1) {
+            $(this).addClass('active font-weight-bold');
+            var collapseEl = $(this).closest('.collapse');
+            collapseEl.addClass('show');
+            collapseEl.prev('.nav-link').removeClass('collapsed').attr('aria-expanded', 'true');
+        }
+    });
+    $('#accordionSidebar a.nav-link:not([data-toggle])').each(function() {
+        var href = $(this).attr('href');
+        if (href && url.indexOf(href.split('?')[0].replace(/.*\//, '')) !== -1) {
+            $(this).closest('.nav-item').addClass('active');
+        }
+    });
+});
+</script>

@@ -70,6 +70,11 @@ public class BusinessService {
 		
 	}
 
+	public void deleteRoom(BusinessDTO businessDTO) {
+		businessDAO.deleteRoom(businessDTO);
+
+	}
+
 
 	public int reservationCount(String user_id) {
 		
@@ -94,6 +99,22 @@ public class BusinessService {
 
 	public Map<String, Object> reservationAtMonth(Map<String, Object> sMap) {
 		return businessDAO.reservationAtMonth(sMap);
+	}
+
+	public List<ReservationDTO> getRecentReservationsForBusiness(String user_id) {
+		return businessDAO.getRecentReservationsForBusiness(user_id);
+	}
+
+	public List<ReviewDTO> getUnansweredReviewsForBusiness(String user_id) {
+		return businessDAO.getUnansweredReviewsForBusiness(user_id);
+	}
+
+	public List<Map<String, Object>> getMonthlyRevenueForBusiness(String user_id) {
+		return businessDAO.getMonthlyRevenueForBusiness(user_id);
+	}
+
+	public List<Map<String, Object>> getRoomRevenueForBusiness(String user_id) {
+		return businessDAO.getRoomRevenueForBusiness(user_id);
 	}
 
 

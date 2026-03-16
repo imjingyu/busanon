@@ -331,7 +331,10 @@ function removeAllChildNods(el) {
       <!--  ************************* Footer Start Here ************************** --> 
      
 
-    </body>
+    
+<%@ include file="footer.jsp" %>
+
+</body>
 
     <script src="${pageContext.request.contextPath }/resources/js/jquery-3.2.1.min.js"></script>
     <script src="${pageContext.request.contextPath }/resources/js/popper.min.js"></script>

@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -72,6 +73,8 @@ public class BusinessController extends FunctionClass {
 			Map<String, Object> uMap = businessService.reservationAtMonth(sMap);
 			System.out.println(uMap);
 			model.addAttribute("AtMonth",uMap);
+			model.addAttribute("monthlyRevenue", businessService.getMonthlyRevenueForBusiness(user_id));
+			model.addAttribute("roomRevenue", businessService.getRoomRevenueForBusiness(user_id));
 				return "BusanOn/business/b_index";
 		} else {
 		}
@@ -131,8 +134,9 @@ public class BusinessController extends FunctionClass {
 			
 			List<BusinessDTO> roomList = businessService.getRoomList(businessDTO);
 			model.addAttribute("rList", roomList);
-			
+
 			businessService.deleteRoomList(businessDTO);
+			businessService.deleteRoom(businessDTO);
 			// 주소변경하면서 이동
 			return "redirect:/business/roomList";
 	}
@@ -194,7 +198,8 @@ public class BusinessController extends FunctionClass {
 		businessDTO.setPEN_NUMBER(request.getParameter("PEN_TEL"));
 		businessDTO.setPEN_ZIPCODE(request.getParameter("postNum"));
 		businessDTO.setPEN_ADDRESS(address);
-		
+		businessDTO.setPEN_INTRODUCE(request.getParameter("PEN_INTRODUCE"));
+
 		businessService.registerPen(businessDTO);
 		
 		// PENSION_Attach
@@ -377,6 +382,32 @@ public class BusinessController extends FunctionClass {
 		System.out.println(reviewDTO);
 		businessService.updateAnwser(reviewDTO);
 		return "redirect:/business/b_reviewlist";
+	}
+
+	/* 사업자 알림 벨: 최근 7일 새 예약 (JSON) */
+	@ResponseBody
+	@RequestMapping(value = "/business/alerts", method = RequestMethod.GET)
+	public Map<String, Object> bAlerts(HttpSession session) {
+		String user_id = (String) session.getAttribute("user_id");
+		if (user_id == null) user_id = "";
+		List<ReservationDTO> list = businessService.getRecentReservationsForBusiness(user_id);
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("count", list.size());
+		result.put("list", list);
+		return result;
+	}
+
+	/* 사업자 메시지: 미답변 리뷰 (JSON) */
+	@ResponseBody
+	@RequestMapping(value = "/business/messages", method = RequestMethod.GET)
+	public Map<String, Object> bMessages(HttpSession session) {
+		String user_id = (String) session.getAttribute("user_id");
+		if (user_id == null) user_id = "";
+		List<ReviewDTO> list = businessService.getUnansweredReviewsForBusiness(user_id);
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("count", list.size());
+		result.put("list", list);
+		return result;
 	}
 	
 }

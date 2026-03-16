@@ -17,13 +17,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.BusanOn.domain.MemberDTO;
 import com.BusanOn.function.FunctionClass;
 import com.BusanOn.service.MemberService;
+import com.BusanOn.service.PointService;
 
 @Controller
 public class MemberController {
 	
 	@Inject
 	private MemberService service;
-	
+
+	@Inject
+	private PointService pointService;
+
 	@RequestMapping(value = "/member/login", method = RequestMethod.GET)
 	public String login(HttpSession session, HttpServletRequest req) {
 		
@@ -86,7 +90,8 @@ public class MemberController {
 	
 	@RequestMapping(value = "/member/joinPro", method = RequestMethod.GET)
 	public String joinPro(MemberDTO mT, HttpServletRequest req) {
-		service.insertMember(mT);		
+		service.insertMember(mT);
+		pointService.addPoint(mT.getUser_id(), mT.getUser_type(), "EARN", 500, "회원가입 축하 포인트");
 		return "BusanOn/member/joinPro";
 	}
 	

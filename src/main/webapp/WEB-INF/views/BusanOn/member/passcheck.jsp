@@ -24,62 +24,97 @@
     </script>
     
     </c:if>
-    <!-- AOS 라이브러리 불러오기-->
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"> 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> 
+    <style>
+    .passcheck-wrap {
+        min-height: calc(100vh - 200px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 16px;
+        background: #f7f9fc;
+    }
+    .passcheck-card {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0,0,0,0.10);
+        padding: 50px 44px 44px;
+        width: 100%;
+        max-width: 420px;
+        text-align: center;
+    }
+    .passcheck-icon {
+        width: 72px;
+        height: 72px;
+        background: #e8f5fa;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 22px;
+        font-size: 32px;
+        color: #38b2d8;
+    }
+    .passcheck-card h3 {
+        font-size: 22px;
+        font-weight: 800;
+        color: #1a2332;
+        margin-bottom: 8px;
+    }
+    .passcheck-card p {
+        font-size: 14px;
+        color: #718096;
+        margin-bottom: 28px;
+        line-height: 1.6;
+    }
+    .passcheck-card .form-control {
+        border: 1.5px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 13px 16px;
+        font-size: 15px;
+        margin-bottom: 16px;
+        transition: border-color 0.2s;
+    }
+    .passcheck-card .form-control:focus {
+        border-color: #38b2d8;
+        box-shadow: 0 0 0 3px rgba(56,178,216,0.12);
+    }
+    .passcheck-submit {
+        width: 100%;
+        background: #38b2d8;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 14px;
+        font-size: 18px;
+        font-family: 'Do Hyeon', sans-serif;
+        cursor: pointer;
+        transition: background 0.2s;
+        margin-top: 4px;
+    }
+    .passcheck-submit:hover { background: #2c9fc4; }
+    </style>
 </head>
 
 <body>
-<!--헤더 -->
 <%@ include file="../header.jsp" %>
- 
-<!--  ************************* Page Title Starts Here ************************** -->
-<div class="page-nav no-margin row">
-    <div class="container">
-        <div class="row">
-            <h2>마이페이지</h2>
+
+<div class="passcheck-wrap">
+    <div class="passcheck-card">
+        <div class="passcheck-icon">
+            <i class="bi bi-person-lock"></i>
         </div>
+        <h3>비밀번호 확인</h3>
+        <p>개인정보 보호를 위해<br>비밀번호를 다시 입력해 주세요.</p>
+        <form action="userpasscheck?type=${type}" id="fr" method="post">
+            <input class="form-control" type="password" name="password" id="password" required placeholder="비밀번호를 입력하세요">
+            <button class="passcheck-submit" type="submit">확 인</button>
+        </form>
     </div>
 </div>
 
-<!-- 마이페이지 폼 시작-->
-<form action="userpasscheck?type=${type}" id="fr" method="post">
-<%-- <c:if test="${type == 'd'}"> --%>
-<!--  <script type="text/javascript"> -->
-<!-- //  	fr.action = "deletecustom" -->
-<!--  </script> -->
-<%-- </c:if> --%>
-<script> 
-AOS.init({duration: 1000});// 자바스크립트로 init()을 해야 동작한다.
-        </script>
- <div class="section bg-light" style="margin-top: 25px;">
-		<div class="container" data-aos="flip-left" data-aos-anchor-placement="top-center">
-			<div class="row">
-			<div class="col-6 col-lg-4"></div>
-				<div class="col-6 col-lg-4">
-					<div class="box-feature mb-4" style="margin-top: 50px;">
-						<i class="bi bi-person-gear d-block-3 mb-4" style="font-size:50px;"></i>
-						<h3 class="text-black mb-3 font-weight-bold">패스워드 입력</h3>
-						<div class="form-group">
-					     <input class="form-control" type="password" name="password" id="password" required placeholder="비밀번호">
-					    </div>
-<!-- 						<p><a href="#" class="learn-more" id="mypagePoint">페이지 이동</a></p> -->
-					</div>
-				</div>
-			<div class="col-6 col-lg-4"></div>
-			<div class="col-6 col-lg-4"></div>
-			<div class="col-6 col-lg-4" style="margin-bottom: 50px;">
-			<input class="btn btn-danger w-100" id="loginbtn" type="submit" value="입 력" style="font-size: 27px; font-family: 'Do Hyeon', sans-serif; padding: 0.75px 0.75px;">
-			</div>
-			</div>
-		</div>
-	</div>
-</form>
-<!-- 마이페이지 폼 끝-->
+<%@ include file="../footer.jsp" %>
 
-<!--  ************************* Footer Start Here ************************** --> 
-     
-    </body>
+</body>
 
     <script src="assets/js/jquery-3.2.1.min.js"></script>
     <script src="assets/js/popper.min.js"></script>

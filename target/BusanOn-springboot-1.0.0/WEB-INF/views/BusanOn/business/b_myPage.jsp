@@ -55,18 +55,16 @@
 				</div>
 				<div class="col-6 col-lg-4">
 					<div class="box-feature mb-4">
-						<img class="d-block-3 mb-4" src="http://project.yermi.works/resources/assets/images/get-money.png" style="width:50px">
-						<h3 class="text-black mb-3 font-weight-bold">포인트내역 조회</h3>
+						<i class="fas fa-coins d-block mb-4" style="font-size:50px; color:#38b2d8;"></i>
+						<h3 class="text-black mb-3 font-weight-bold"><a href="${pageContext.request.contextPath}/member/mypage/pointList">포인트내역 조회</a></h3>
 						<p class="text-black-50">포인트 내역을 조회합니다.</p>
-						<p><a href="#" class="learn-more" id="mypagePoint" onclick="alert1()">페이지 이동</a></p>
 					</div>
 				</div>
 				<div class="col-6 col-lg-4">
 					<div class="box-feature mb-4">
-						<img class="d-block-3 mb-4" src="http://project.yermi.works/resources/assets/images/chat.png" style="width:50px">
-						<h3 class="text-black mb-3 font-weight-bold">내가 쓴 댓글 조회</h3>
-						<p class="text-black-50">내가 쓴 댓글을 조회합니다.</p>
-						<p><a href="#" class="learn-more" id="mypageReply" onclick="alert1()">페이지 이동</a></p>
+						<i class="fas fa-star d-block mb-4" style="font-size:50px; color:#38b2d8;"></i>
+						<h3 class="text-black mb-3 font-weight-bold"><a href="${pageContext.request.contextPath}/business/b_reviewlist">받은 리뷰 조회</a></h3>
+						<p class="text-black-50">내 업체에 작성된 리뷰를 조회합니다.</p>
 					</div>
 				</div>
 				<div class="col-6 col-lg-4">
@@ -102,12 +100,6 @@
 
 <!-- 마이페이지 폼 끝-->
 
-<script type="text/javascript">
-		function alert1() {
-		
-			alert('준비중입니다.');
-		}
-	</script>
 
 <!--  ************************* Footer Start Here ************************** --> 
      

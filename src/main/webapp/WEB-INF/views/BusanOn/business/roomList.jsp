@@ -58,7 +58,7 @@
 			                                    <td>${businessDTO.RM_PRICE}</td>
 			                                    <td>${businessDTO.RES_STATUS}</td>
 			                                    <td>${businessDTO.ROOM_ID}</td>
-			                                    
+			                                    <td class="d-none">${businessDTO.PEN_ID}</td>
                                             </tr>
 		                                    </c:forEach>
 	                                     </tbody>
@@ -89,6 +89,7 @@
                                      <input type="text" class="form-control form-control-user" id="price" name="RM_PRICE" >
                                     </td>
                                 <hr>
+                                <input type="hidden" id="PEN_ID" name="PEN_ID" >
 		                		<input type="hidden" id="num" name="RM_NUM" >
                                 <button class="btn btn-primary btn-user btn-block" id="btnReg">
                                     숙소 수정하기
@@ -191,7 +192,8 @@
 				
 				// 배열에 담긴 값을 확인하기 위한 log코드
 //	 			console.log("배열 값 : " + tdArr);
-				
+
+			var PEN_ID = td.eq(8).text();
 			var RM_NUM = td.eq(7).text();
 			var RM_NAME = td.eq(1).text();
 			var RM_CHECKIN = td.eq(2).text();
@@ -205,6 +207,7 @@
 //	 			console.log("RM_PRICE : " + RM_PRICE)
 				
 				// 각 값에 입력
+			$('#PEN_ID').val(PEN_ID);
 			$('#num').val(RM_NUM);
 			$('#name').val(RM_NAME);
 			$('#startline').val(RM_CHECKIN);

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.BusanOn.domain.ReservationDTO;
 import com.BusanOn.function.FunctionClass;
 import com.BusanOn.service.PaymentService;
+import com.BusanOn.service.PointService;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
@@ -26,7 +27,10 @@ public class PaymentController {
 	
 	@Inject
 	private PaymentService service;
-	
+
+	@Inject
+	private PointService pointService;
+
 	public PaymentController() {
 		// REST API 키와 REST API secret 입력
 		this.api = new IamportClient("3157873113568822", "8Nt0l6CyajA08fjZvXoh2i5q4Y1yA8IvKoy8mEDxUpJCpkzT6klss5rDe4W4TqXiPDGC6NejJPvriujx");
@@ -42,7 +46,14 @@ public class PaymentController {
 		System.out.println("===================");
 		System.out.println(sMap);
 		service.insertreservation(sMap);
-		
+
+		String user_id = sMap.get("user_id").toString();
+		String user_type = sMap.get("user_type").toString();
+		String pen_name = sMap.get("pen_name") != null ? sMap.get("pen_name").toString() : "";
+		int rm_price = (int) Math.round(Integer.parseInt(sMap.get("rm_price").toString()) * 0.01);
+		if (rm_price < 100) rm_price = 100;
+		pointService.addPoint(user_id, user_type, "EARN", rm_price, "예약 완료 포인트 적립 - " + pen_name);
+
 		return "true";
 		
 	}

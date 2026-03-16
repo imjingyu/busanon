@@ -14,6 +14,7 @@ public class BusinessDTO {
 	private String PEN_ADDRESS;
 	private String PEN_NUMBER;
 	private String PEN_IMAGE;
+	private String PEN_INTRODUCE;
 	private String RM_NAME;
 	private String RM_CHECKIN;
 	private String RM_CHECKOUT;
@@ -87,6 +88,12 @@ public class BusinessDTO {
 	}
 	public void setPEN_IMAGE(String pEN_IMAGE) {
 		PEN_IMAGE = pEN_IMAGE;
+	}
+	public String getPEN_INTRODUCE() {
+		return PEN_INTRODUCE;
+	}
+	public void setPEN_INTRODUCE(String pEN_INTRODUCE) {
+		PEN_INTRODUCE = pEN_INTRODUCE;
 	}
 	public String getRM_NAME() {
 		return RM_NAME;
