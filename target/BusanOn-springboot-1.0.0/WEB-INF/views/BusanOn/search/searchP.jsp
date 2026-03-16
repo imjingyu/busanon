@@ -114,6 +114,41 @@
 <script src="${pageContext.request.contextPath}/resources/js/script.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/date.js"></script>
 
+<<<<<<< HEAD
+=======
+  				   <c:forEach items="${pensionList }" var="PensionDTO">
+					<div class="col-lg-8  pensionlist">
+						<div class="pensions" data-pensionid="${PensionDTO.pen_id}">
+						  <div class="container">
+							<a href="${pageContext.request.contextPath }/search/pensionDetail?pen_id=${PensionDTO.pen_id}&rm_checkin=${rm_checkin }&rm_checkout=${rm_checkout }" >
+								<img src="${pageContext.request.contextPath }/resources/upload/${PensionDTO.pen_image }" alt="Image" class="img-fluid">
+							</a>
+							<div class="pensionInfo">
+							  <div class="infoBox1">
+								<h2><a href="${pageContext.request.contextPath }/search/pensionDetail?&pen_id=${PensionDTO.pen_id}&rm_checkin=${rm_checkin }&rm_checkout=${rm_checkout }">${PensionDTO.pen_name }</a>
+								</h2>
+								<p>${PensionDTO.pen_address }</p>
+							  </div>
+							  
+							  <div class="infoBox2">
+								<p>가격 <fmt:formatNumber type="number" maxFractionDigits="3" value="${PensionDTO.rm_price }" /> 원</p>
+							  </div>
+							  
+							  <div class="infoBox3">
+								<p>별점 ${PensionDTO.star }</p>
+								<p>리뷰 ${PensionDTO.rv }개</p>
+							  </div>
+							</div>
+						  </div>
+						</div>
+					</div>
+					</c:forEach>
+				</div>  
+				
+				<div style="padding-bottom: 10px;"></div>
+				<%@ include file="../footer.jsp" %>
+</body>
+>>>>>>> parent of fee9d09 (1234)
 <script type="text/javascript">
 var index = 2;
 var curr_order = "";

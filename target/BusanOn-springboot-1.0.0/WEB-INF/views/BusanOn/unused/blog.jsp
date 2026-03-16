@@ -15,62 +15,82 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/plugins/slider/css/owl.carousel.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/plugins/slider/css/owl.theme.default.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/css/style.css" />
-    
 </head>
 
 <body>
 <!--헤더 -->
-<%@ include file="../../header.jsp" %>
+<%@ include file="../header.jsp" %>
  
+  
+        
 <!--  ************************* Page Title Starts Here ************************** -->
 <div class="page-nav no-margin row">
     <div class="container">
         <div class="row">
-            <h2>예약내역조회</h2>
+            <h2>Destination</h2>
+            <ul>
+                <li> <a href="#"><i class="fas fa-home"></i> Home</a></li>
+                <li><i class="fas fa-angle-double-right"></i> Destination</li>
+            </ul>
         </div>
     </div>
 </div>
-
-<!-- 마이페이지 폼 시작-->
-<!-- Begin Page Content -->
-                <div class="container-fluid">
-                    <!-- DataTales Example -->
-                    <div class="card shadow my-5">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">예약내역조회</h6>
+     
+  <!--################### Blog Starts Here #######################--->  
+     
+        <div class="blog container-fluid">
+            <div class="container">
+                
+                <div class="row blog-row">
+                    <div class="col-md-4">
+                        <div class="blogcol">
+                            <img src="assets/images/packages/p1.jpg" alt="">
+                              <span>Oct 12, 2019</span> 
+                              <h4>Journeys Are Best Measured In New Friends</h4> 
                         </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr class="text-center">
-                                            <th>예약번호</th>
-                                            <th>숙소이름</th>
-                                            <th>체크인</th>
-                                            <th>체크아웃</th>
-                                            <th>승인상태</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    	<c:forEach items="${reservation}" var="r">
-	                                        <tr>
-	                                            <td class="text-center">${r.reservationNum}</td>
-	                                            <td class="text-center"><a href="/pension/detail?pensionid=${r.pensionid}" class="text-dark">${r.roomName}</a></td>
-	                                            <td class="text-center">${r.checkin}</td>
-	                                            <td class="text-center">${r.checkout}</td>
-	                                            <td class="text-center">${r.reservationStatus ? "예약" : "취소"}</td>
-	                                        </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                            </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="blogcol">
+                            <img src="assets/images/packages/p2.jpg" alt="">
+                              <span>Oct 12, 2019</span> 
+                              <h4>Morbi sollicitudin nisi id consequat bibendum</h4> 
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="blogcol">
+                            <img src="assets/images/packages/p3.jpg" alt="">
+                              <span>Oct 12, 2019</span> 
+                              <h4>Journeys Are Best Measured In New Friends</h4> 
+                        </div>
+                    </div>
+                     <div class="col-md-4">
+                        <div class="blogcol">
+                            <img src="assets/images/packages/p4.jpg" alt="">
+                              <span>Oct 12, 2019</span> 
+                              <h4>Journeys Are Best Measured In New Friends</h4> 
+                        </div>
+                    </div>
+                     <div class="col-md-4">
+                        <div class="blogcol">
+                            <img src="assets/images/packages/p5.jpg" alt="">
+                              <span>Oct 12, 2019</span> 
+                              <h4>Journeys Are Best Measured In New Friends</h4> 
+                        </div>
+                    </div>
+                     <div class="col-md-4">
+                        <div class="blogcol">
+                            <img src="assets/images/packages/p6.jpg" alt="">
+                              <span>Oct 12, 2019</span> 
+                              <h4>Journeys Are Best Measured In New Friends</h4> 
                         </div>
                     </div>
                 </div>
-
-
-<!-- 마이페이지 폼 끝-->
-
+            </div>
+        </div>
+     
+                     
+        
+   
 <!--  ************************* Footer Start Here ************************** --> 
      
     <footer class="footer">

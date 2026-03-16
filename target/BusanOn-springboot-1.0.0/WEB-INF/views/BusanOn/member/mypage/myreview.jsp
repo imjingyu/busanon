@@ -156,11 +156,17 @@
 </div>
 </div>
 
+<<<<<<< HEAD
 <div style="margin-top:28px;text-align:center;padding-bottom:20px;">
     <a href="${pageContext.request.contextPath}/member/m_myPage" class="back-btn">
         <i class="fas fa-arrow-left"></i> 마이페이지로
     </a>
 </div>
+=======
+<!--  ************************* Footer Start Here ************************** --> 
+     
+    <%@ include file="../../footer.jsp" %>
+>>>>>>> parent of fee9d09 (1234)
 
 <%@ include file="../../footer.jsp" %>
 

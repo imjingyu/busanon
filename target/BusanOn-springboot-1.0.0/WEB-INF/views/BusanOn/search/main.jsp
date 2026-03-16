@@ -234,11 +234,16 @@
 
 </body>
 
+<<<<<<< HEAD
 <script src="${pageContext.request.contextPath }/resources/js/jquery-3.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/popper.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/plugins/scroll-fixed/jquery-scrolltofixed-min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/plugins/slider/js/owl.carousel.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/script.js"></script>
+=======
+       <!--  ************************* Footer Start Here ************************** --> 
+     <%@ include file="../footer.jsp" %>
+>>>>>>> parent of fee9d09 (1234)
 
 </html>

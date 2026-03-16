@@ -29,6 +29,7 @@
     </div>
 </div>
 
+<<<<<<< HEAD
 <main class="main-content">
     <div class="reserve-wrapper">
 
@@ -40,6 +41,15 @@
                 </div>
                 <div class="reserve-card-body">
                     <input type="hidden" name="user_id" value="${user_id}">
+=======
+	<div style="padding-bottom: 20px;"></div>
+<!--footer -->
+<%@ include file="../footer.jsp" %>
+	
+	<script>
+		var res_num = '${businessDTO.PEN_ID }' + '${param.room_id}' + '${uidRandom }';
+// 		alert(res_num);
+>>>>>>> parent of fee9d09 (1234)
 
                     <div class="reserve-field-group">
                         <label class="reserve-field-label">예약자 이름</label>

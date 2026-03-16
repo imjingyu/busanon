@@ -15,6 +15,7 @@ Description: This Template is created for Youtubers
   padding: 0px;
   list-style: none; }
 
+<<<<<<< HEAD
 html {
     height: 100%;
     margin: 0;
@@ -41,6 +42,8 @@ body {
     flex: 1;
 }
 
+=======
+>>>>>>> parent of fee9d09 (1234)
 img {
   max-width: 100%; }
 
@@ -1322,7 +1325,6 @@ address {
 	width: 100%;
 /* 	margin: 10px auto;  이미지 사이 공백 삭제 */
 	position: relative;
-	margin-bottom: 2rem !important;
 }
 
 

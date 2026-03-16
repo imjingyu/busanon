@@ -210,6 +210,7 @@
     <!-- 탭 콘텐츠 -->
     <div class="tab-content pd-tab-content">
 
+<<<<<<< HEAD
         <!-- 객실 탭 -->
         <div id="tabhome" class="tab-pane fade active show">
         <div class="pd-wrap">
@@ -275,6 +276,105 @@
                 </c:forEach>
             </div>
         </div>
+=======
+	
+	</script>
+	
+	<div style="margin: 15px 0;">
+		<div class="roomInfo">
+			<form action="${pageContext.request.contextPath}/search/pensionDetail">
+<%-- 				<input id="" type="hidden" name="pen_name" value="${pen_name }"> --%>
+				<input id="" type="hidden" name="pen_id" value="${pen_id }">
+				<div style="padding: 2.5px 2.5px 2.5px 2.5px;">
+					<div class="row form-detail" style="display: flex;margin: auto;border: 1px solid gainsboro;border-radius: 10px;width: auto;background: white;align-items: center;">
+						<div class="col-md-2 ffb">
+			               	<input type='date' id="checkin" min="${today }" value="${rm_checkin }" class="main_checkin_1" name="rm_checkin"
+			               		style="width: 99%; margin: 0px 2.25px; padding: 0;" required><!--  onchange="dateChk()" -->
+						</div>
+						<div class="col-md-2 ffb">
+			               	<input type='date' id="checkout" min="${tomorrow }" value="${rm_checkout }" class="main_checkout_1" name="rm_checkout"
+								style="width: 99%; margin: 0px 2.25px; padding: 0; border-left: 0;" required><!--  onchange="dateChk()" -->
+						</div>
+						<div class="col-md-2 ffb">
+							<button class="btn btn-primary w-100"
+							 style="border: none;border-radius: 10px;height: 35px;font-size: 25px;font-family: 'Do Hyeon', sans-serif;display: flex;justify-content: center;align-items: center;padding-bottom: 4px;">변 경</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	
+	<!-- //tab -->
+	<div class="tab-content">
+	<div id="tabhome" class="container tab-pane fade active show">
+	<c:forEach var="businessDTO" items="${searchRoomList }">
+	<form action="${pageContext.request.contextPath }/search/reserve?rm_checkin=${rm_checkin}&rm_checkout=${rm_checkout}&room_id=${businessDTO.ROOM_ID }" method="get" data-sel-date="" data-sel-date2=""
+		style="margin: 15px 0; padding: 0; border: 0; box-sizing: border-box;" onsubmit="return logincheck();">
+<%-- 		<input id="" type="hidden" name="pen_name" value="${pensionDTO.pen_name }"> --%>
+		<input id="" type="hidden" name="rm_checkin" value="${rm_checkin}">
+		<input id="" type="hidden" name="rm_checkout" value="${rm_checkout}">
+		<input id="" type="hidden" name="room_id" value="${businessDTO.ROOM_ID }">
+		<input id="" type="hidden" name="rm_price" value="${businessDTO.RM_PRICE }">
+		<!-- 객실안내/예약 -->
+		<article class="roomInfo">
+		 	<div><!--  style="border: 1px solid red; margin: 10px 25%;" -->
+				<div style="padding: 0 2.5px;"><!-- padding: 15px 2.5px; -->
+				 	<div class="room">
+					 	<p class="pic_view" style="margin-block-start: auto;"><img class="pensionPic" src="${pageContext.request.contextPath }/resources/upload/${businessDTO.RM_IMAGE }"
+					 		style="display: inline-block; width: auto; height: auto; filter: none;"></p>
+					 	
+						<strong class="penTitle" style="margin: 0;">${businessDTO.RM_NAME }</strong>
+						
+						<div><!--  class="roomInfo" -->
+						
+							<div class="roomCheckIO">
+								<div class="sCheckIO">
+									체크인 / 체크아웃
+									<span style="float: right;">
+										${businessDTO.RM_CHECKIN } / ${businessDTO.RM_CHECKOUT }
+									</span>
+								</div>
+							</div>
+									
+							<div class="roomPrice">
+								<div class="srPrice">
+									
+									<!-- 표시 금액 -->
+									<div>
+										<p style="color: black; font-size: 30px; overflow: hidden; border-top: 1px solid gainsboro; padding: 20px 0; overflow: hidden; margin: 0;"><!--  border-bottom: 1px solid gainsboro; padding-bottom:5px;  -->
+										 <b style="float: left; font-size: 27px; color: #8c8c8c;">가격</b>
+										<span style="float: right;"><b><fmt:formatNumber type="number" maxFractionDigits="3" value="${businessDTO.RM_PRICE }"/> 원</b></span></p>
+									</div>
+								</div>
+								
+								
+							</div>
+						</div>
+						
+						<!-- <div style="margin: 15px 0;"></div> -->
+					 	
+					 	<div class="rButton">
+					 		<input type="submit" class="btn btn-primary w-100"
+					 			<c:if test="${businessDTO.OVERLAP != 0 }"> disabled value="예 약 불 가" style="border:none; border-radius:7px; height: 40px; background-color: gray; color:white; font-family: 'Do Hyeon', sans-serif; font-size: 20px;"</c:if>
+					 			<c:if test="${businessDTO.OVERLAP == 0 }"> value="${businessDTO.BOOK }" style="border-radius:7px; height: 40px; color:white; font-family: 'Do Hyeon', sans-serif; font-size: 20px;"</c:if>>
+<!-- 					 		<button class="btn btn-primary w-100" style="border-radius:7px; height: 40px; "> -->
+<%-- 					 			<h4 style="color:white; font-family: 'Do Hyeon', sans-serif;">${businessDTO.BOOK }</h4> --%>
+<!-- 					 		</button> -->
+					 	</div>
+					 	<div style="margin: 0 0 25px 0;"></div>
+				 	</div>
+				</div>
+			</div>
+		</article>
+	</form>
+	</c:forEach>
+	<div style="padding-top: 100px;"></div>
+	</div>
+<%@ include file="review.jsp" %>
+<%@ include file="../footer.jsp" %>
+	</div>
+>>>>>>> parent of fee9d09 (1234)
 
         <!-- 리뷰 탭 -->
         <div id="tabmenu" class="tab-pane fade">

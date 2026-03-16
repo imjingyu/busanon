@@ -30,8 +30,32 @@
             </div>
             <div class="footer-copy">© 부산온나 | come to Busan</div>
         </div>
+<<<<<<< HEAD
     </div>
 </footer>
 <c:if test="${not fn:contains(uri, '/search/main') and not fn:contains(uri, '/admin/') and not fn:contains(uri, '/business/')}">
     <button type="button" class="floating-back-btn" onclick="history.back()">뒤로가기</button>
 </c:if>
+=======
+        
+
+    </footer>
+    <div class="copy">
+            <div class="container">
+                <a href="https://www.smarteyeapps.com/">2022 &copy; 부산온나 | come to Busan</a>
+                
+                <span>
+                <a><i class="fab fa-github"></i></a>
+                <!-- <a><i class="fab fa-google-plus-g"></i></a> -->
+               <!-- <a><i class="fab fa-pinterest-p"></i></a> -->
+				<!-- <a><i class="fab fa-twitter"></i></a> -->
+                <!-- <a><i class="fab fa-facebook-f"></i></a> -->
+        </span>
+            </div>
+
+        </div> 
+
+    </body>
+
+</html>
+>>>>>>> parent of fee9d09 (1234)

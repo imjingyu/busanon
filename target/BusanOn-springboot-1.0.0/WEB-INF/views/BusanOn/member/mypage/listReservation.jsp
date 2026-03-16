@@ -139,10 +139,23 @@
     </a>
 </div>
 
+<<<<<<< HEAD
 <script type="text/javascript">
 function cancelreservation(res_number) {
     if (confirm('취소하시겠습니까?')) {
         location.href = 'listReservation2?res_number=' + res_number;
+=======
+<!-- 마이페이지 폼 끝-->
+
+<!--  ************************* Footer Start Here ************************** --> 
+     
+    <%@ include file="../../footer.jsp" %>
+    <script type="text/javascript">
+    function cancelreservation(res_number){
+    	if(confirm('취소하시겠습니까?')){
+    		location.href='listReservation2?res_number='+res_number+'';
+    	}
+>>>>>>> parent of fee9d09 (1234)
     }
 }
 </script>
