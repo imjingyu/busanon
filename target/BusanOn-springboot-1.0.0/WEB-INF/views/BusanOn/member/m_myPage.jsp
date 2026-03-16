@@ -23,6 +23,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 <main class="main-content">
 
@@ -47,6 +48,8 @@
 >>>>>>> parent of fee9d09 (1234)
 =======
 >>>>>>> parent of fee9d09 (1234)
+=======
+>>>>>>> parent of fee9d09 (1234)
  
 <!--  ************************* Page Title Starts Here ************************** -->
 <div class="page-nav no-margin row">
@@ -61,6 +64,7 @@
     <div class="container mypage-cards-section">
         <div class="row g-4">
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -179,6 +183,8 @@
 <script src="${pageContext.request.contextPath}/resources/js/script.js"></script>
 </body>
 =======
+=======
+>>>>>>> parent of fee9d09 (1234)
 =======
 >>>>>>> parent of fee9d09 (1234)
 =======
