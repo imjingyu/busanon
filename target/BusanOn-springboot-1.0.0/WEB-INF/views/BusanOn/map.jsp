@@ -360,6 +360,30 @@ function removeAllChildNods(el) {
                         Email: <a href="mailto:info@bluedart.com" class="">info@bluedart.in</a><br>
                         Web: <a href="https://smarteyeapps.com/" class="">www.bluedart.in</a>
                     </address>
+<<<<<<< HEAD
+=======
+
+                </div>
+            </div>
+        </div>
+        
+
+    </footer>
+    <div class="copy">
+            <div class="container">
+                <a href="https://www.smarteyeapps.com/">2019 &copy; All Rights Reserved | Designed and Developed by Smarteyeapps</a>
+                
+                <span>
+                <a><i class="fab fa-github"></i></a>
+                <a><i class="fab fa-google-plus-g"></i></a>
+                <a><i class="fab fa-pinterest-p"></i></a>
+                <a><i class="fab fa-twitter"></i></a>
+                <a><i class="fab fa-facebook-f"></i></a>
+        </span>
+            </div>
+
+        </div> 
+>>>>>>> parent of fee9d09 (1234)
 
                 </div>
             </div>

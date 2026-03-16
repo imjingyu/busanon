@@ -19,6 +19,7 @@
 <body>
 <%@ include file="../header.jsp" %>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 <main class="main-content">
 
@@ -35,6 +36,8 @@
                 </div>
             </div>
 =======
+=======
+>>>>>>> parent of fee9d09 (1234)
  
 <!--  ************************* Page Title Starts Here ************************** -->
 <div class="page-nav no-margin row">
@@ -49,6 +52,7 @@
     <div class="container mypage-cards-section">
         <div class="row g-4">
 
+<<<<<<< HEAD
 <<<<<<< HEAD
             <!-- 예약내역 -->
             <div class="col-6 col-lg-4">
@@ -163,6 +167,8 @@
 <script src="${pageContext.request.contextPath}/resources/js/script.js"></script>
 </body>
 =======
+=======
+>>>>>>> parent of fee9d09 (1234)
  <div class="section bg-light" style="margin-top: 25px;">
 		<div class="container">
 			<div class="row">
